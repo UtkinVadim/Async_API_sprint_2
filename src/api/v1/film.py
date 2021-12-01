@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 
 from api.utils import add_filter_to_body, add_sort_to_body, generate_body
 from models.film_response import FilmDetailResponse, ShortFilmResponse
+from models.genre import Genre
 from services.film import FilmService, get_film_service
 from strings.exceptions import FILM_NOT_FOUND
 
@@ -50,7 +51,7 @@ async def film_search(
         body = await add_sort_to_body(body, sort)
 
     if filter_genre_id:
-        filter_genre = await film_service.get_by_id(filter_genre_id, index="genre")
+        filter_genre = await film_service.get_by_id(filter_genre_id, index="genre", model=Genre)
         if not filter_genre:
             raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=FILM_NOT_FOUND)
         body = await add_filter_to_body(body, filter_genre)
