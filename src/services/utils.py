@@ -1,4 +1,7 @@
-async def flatten_json(obj):
+from typing import List, Union
+
+
+async def flatten_json(obj) -> List:
     """
     "Плющит" входной объект.
 
@@ -23,3 +26,22 @@ async def flatten_json(obj):
 
     await flatten(obj)
     return body_list
+
+
+async def key_generator(index: str, body: Union[dict, str]) -> str:
+    """
+    Создаёт ключ для редиса, по которому будут храниться данные.
+    Структура ключа:
+    <es_index>::<first_key>::<first_value>::<second_key>::<second_value>
+
+    :param index:
+    :param body:
+    :return:
+    """
+
+    body_list = await flatten_json(body)
+    keys_list = [index, *body_list]
+    separate_symbol = "::"
+    key = separate_symbol.join(keys_list)
+
+    return key
