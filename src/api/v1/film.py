@@ -1,11 +1,9 @@
 from http import HTTPStatus
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Query
-
 from api.utils import add_filter_to_body, add_sort_to_body, generate_body
+from fastapi import APIRouter, Depends, HTTPException, Query
 from models.film_response import FilmDetailResponse, ShortFilmResponse
-from models.genre import Genre
 from services.film import FilmService, get_film_service
 from strings.exceptions import FILM_NOT_FOUND
 
@@ -42,7 +40,7 @@ async def film_search(
     :param film_service:
     :return:
     """
-    if not query:
+    if not query and query is not None:
         return
 
     body = await generate_body(query, from_, size)
