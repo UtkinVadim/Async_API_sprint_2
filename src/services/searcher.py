@@ -30,6 +30,8 @@ class ElasticSearcher(Searcher):
         Забирает данные из эластика по id. Результат валидируется моделью.
 
         :param id_:
+        :param index:
+        :param model:
         :return:
         """
         try:
@@ -48,6 +50,8 @@ class ElasticSearcher(Searcher):
         Возвращаемый результат валидируется моделью.
 
         :param body:
+        :param index:
+        :param model:
         :return:
         """
         docs = await self.elastic.search(index=index, body=body)

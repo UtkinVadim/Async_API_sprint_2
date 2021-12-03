@@ -75,6 +75,7 @@ class RedisCacher(Cacher):
         # pydantic предоставляет удобное API для создания объекта моделей из json
 
         :param key:
+        :param model:
         :return:
         """
         data = await self.redis.get(key)
@@ -100,6 +101,7 @@ class RedisCacher(Cacher):
         pydantic позволяет сериализовать модель в json
 
         :param obj:
+        :param key:
         :return:
         """
 

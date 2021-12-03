@@ -20,6 +20,7 @@ class BaseService:
 
         :param id_:
         :param index:
+        :param model:
         :return:
         """
         index = index if index else self.index
