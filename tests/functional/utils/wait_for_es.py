@@ -4,7 +4,7 @@ import sys
 import elasticsearch
 
 sys.path.insert(1, os.path.realpath(os.path.pardir))
-from settings import ELASTIC_HOST, ELASTIC_PORT
+from functional.settings import ELASTIC_HOST, ELASTIC_PORT
 
 import time
 

@@ -109,5 +109,4 @@ class RedisCacher(Cacher):
             data_to_cache = json.dumps({"result": [d.json() for d in obj]})
         else:
             data_to_cache = obj.json()
-
         await self.redis.set(key, data_to_cache, expire=CACHE_EXPIRE_IN_SECONDS)
