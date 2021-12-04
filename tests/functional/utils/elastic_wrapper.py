@@ -46,7 +46,7 @@ class ElasticWrapper:
         :param data:
         :return:
         """
-        lines, _ = await helpers.async_bulk(client=self.client, actions=data, index=index_name)
+        lines, _ = await helpers.async_bulk(client=self.client, actions=data, index=index_name, refresh=True)
         log.info(f"Lines recorded in elastic: {lines}")
 
     async def load_from_file(self, index_name: str, data_path: str) -> None:
@@ -61,14 +61,14 @@ class ElasticWrapper:
             data = json.load(file)
         await self.load(index_name=index_name, data=data)
 
-    async def delete_index(self, index_name: str, ignore: Union[int, List[int], None] = [400, 404]) -> None:
+    async def delete_index(self, index_name: str, ignore: Union[int, List[int], None] = 400) -> None:
         """
         Удаляет индекс из эластика
         """
         await self.client.indices.delete(index=index_name, ignore=ignore)
         log.info(f"Index {index_name} deleted")
 
-    async def delete_data(self, index_name: str, ignore: Union[int, List[int], None] = [400, 404]) -> None:
+    async def delete_data(self, index_name: str, ignore: Union[int, List[int], None] = 400) -> None:
         """
         Удаляет данные из индекса эластика
         """
