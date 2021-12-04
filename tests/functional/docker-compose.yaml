@@ -5,32 +5,41 @@ services:
       file: ../../docker-compose.yaml
       service: redis
     container_name: redis_test
+    hostname: redis_test
     ports:
       - "${REDIS_PORT}:6379"
+    networks:
+      - movies-test
 
   fastapi_test:
     extends:
       file: ../../docker-compose.yaml
-      service: redis
+      service: fastapi
     container_name: fastapi_test
+    hostname: fastapi_test
     env_file:
       - ../../.env
     environment:
-      - REDIS_HOST=127.0.0.1
-      - ELASTIC_HOST=127.0.0.1
+      - "REDIS_HOST=redis_test"
+      - "ELASTIC_HOST=elastic_test"
     ports:
       - "${SERVER_PORT}:8000"
     depends_on:
       - redis_test
       - elastic_test
+    networks:
+      - movies-test
 
   elastic_test:
     image: elasticsearch:7.14.2
     container_name: elastic_test
+    hostname: elastic_test
     ports:
       - "${ELASTIC_PORT}:9200"
     environment:
       - discovery.type=single-node
+    networks:
+      - movies-test
 
   tests:
     build: .
@@ -39,8 +48,12 @@ services:
       - redis_test
       - elastic_test
       - fastapi_test
+    networks:
+      - movies-test
 
 
 networks:
+  movies-test:
+    name: movies-test
   movies-network:
-    name: movies-network
+    name: movies-test
