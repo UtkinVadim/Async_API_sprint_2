@@ -1,17 +1,19 @@
 import os
 from logging import config as logging_config
 
-from dotenv import find_dotenv, load_dotenv
-
 from core.logger import LOGGING
+from dotenv import find_dotenv, load_dotenv
 
 load_dotenv(find_dotenv(raise_error_if_not_found=False))
 
 # Применяем настройки логирования
 logging_config.dictConfig(LOGGING)
 
-# Название проекта. Используется в Swagger-документации
-PROJECT_NAME = os.getenv("PROJECT_NAME", "movies")
+# Название, версия и описание проекта. Используются в Swagger-документации
+PROJECT_NAME = os.getenv("PROJECT_NAME", "Read-only API для онлайн-кинотеатра")
+VERSION = os.getenv("MOVIE_APP_VERSION", "1.0.0")
+DESCRIPTION = os.getenv("MOVIE_APP_DESCRIPTION",
+                        "Информация о фильмах, жанрах и людях, участвовавших в создании произведения")
 
 # Настройки Redis
 REDIS_HOST = os.getenv("REDIS_HOST", "127.0.0.1")
