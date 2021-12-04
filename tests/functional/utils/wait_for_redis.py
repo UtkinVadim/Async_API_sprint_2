@@ -7,7 +7,7 @@ import time
 import aioredis
 
 sys.path.insert(1, os.path.realpath(os.path.pardir))
-from settings import REDIS_HOST, REDIS_PORT
+from functional.settings import REDIS_HOST, REDIS_PORT
 
 logger = logging.getLogger(__name__)
 log_format = '%(asctime)s %(levelname)s %(filename)s:%(lineno)d %(message)s'
