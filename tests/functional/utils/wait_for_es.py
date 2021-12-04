@@ -4,7 +4,7 @@ import sys
 import elasticsearch
 
 sys.path.insert(1, os.path.realpath(os.path.pardir))
-from functional.settings import ELASTIC_HOST, ELASTIC_PORT
+from settings import ELASTIC_HOST, ELASTIC_PORT
 
 import time
 
@@ -17,13 +17,13 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format=log_format)
 bold_green = "\x1b[32;1m"
 reset = "\x1b[0m"
 
-
-def main():
+import asyncio
+async def main():
     elastic_online = False
     while not elastic_online:
         try:
-            elastic = elasticsearch.Elasticsearch(hosts=[f"{ELASTIC_HOST}:{ELASTIC_PORT}"])
-            elastic_answer = elastic.ping()
+            elastic = elasticsearch.AsyncElasticsearch(hosts=[f"{ELASTIC_HOST}:{ELASTIC_PORT}"])
+            elastic_answer = await elastic.ping()
             if elastic_answer:
                 elastic_online = True
                 logger.debug('Elastic reporting!'.join([bold_green, reset]))
@@ -33,4 +33,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    asyncio.run(main())
