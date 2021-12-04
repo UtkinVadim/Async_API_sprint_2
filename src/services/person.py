@@ -7,13 +7,14 @@ from fastapi import Depends
 from db.elastic import get_elastic
 from db.redis import get_redis
 from models.person import Person
-from services.base_service import BaseService, RedisCacher, ElasticSearcher
-from services.utils import key_generator
+from services.base_service import BaseService
+from services.cacher import RedisCacher
+from services.searcher import ElasticSearcher
 
 
 class PersonService(BaseService):
-    def __init__(self, redis: RedisCacher, elastic: ElasticSearcher, key_generator: key_generator):
-        super().__init__(redis, elastic, key_generator)
+    def __init__(self, redis: RedisCacher, elastic: ElasticSearcher):
+        super().__init__(redis, elastic)
         self.index = "person"
         self.model = Person
 
@@ -23,4 +24,4 @@ def get_person_service(
     redis: Redis = Depends(get_redis),
     elastic: AsyncElasticsearch = Depends(get_elastic),
 ) -> PersonService:
-    return PersonService(RedisCacher(redis), ElasticSearcher(elastic), key_generator)
+    return PersonService(RedisCacher(redis), ElasticSearcher(elastic))
