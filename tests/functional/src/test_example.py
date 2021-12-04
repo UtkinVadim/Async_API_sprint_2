@@ -1,18 +1,8 @@
 import pytest
 
-indexes_dict = {'movies': '../testdata/film_index_settings.json',
-                'genre': '../testdata/genre_index_settings.json',
-                'person': '../testdata/person_index_settings.json',
-                }
-
-data_dict = {'movies': '../testdata/films_data.json',
-             'genre': '../testdata/genres_data.json',
-             'person': '../testdata/persons_data.json',
-             }
-
 
 @pytest.mark.asyncio
-async def test_search_detailed(make_get_request):
+async def test_search_detailed(make_get_request, es_client, event_loop):
     response = await make_get_request(method='/genre/')
 
     print(response.status)
