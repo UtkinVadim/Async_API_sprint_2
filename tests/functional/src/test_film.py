@@ -167,7 +167,7 @@ async def test_film_filter_all(make_get_request, es_client):
 
 
 @pytest.mark.asyncio
-async def test_film_filter_all(make_get_request, es_client, redis_client):
+async def test_film_filter_all_cached(make_get_request, es_client, redis_client):
     response = await make_get_request(method='/film',
                                       params={'page[size]': '9999'})
     assert response.status == http.HTTPStatus.OK
