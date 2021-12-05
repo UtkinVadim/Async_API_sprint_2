@@ -1,4 +1,5 @@
 import http
+import json
 
 import pytest
 
@@ -47,14 +48,20 @@ expected_films_genre_filter_on_page = [
     {'id': '50fb4de9-e4b3-4aca-9f2f-00a48f12f9b3', 'title': 'Star Trek: First Contact', 'imdb_rating': 7.6},
     {'id': '6ecc7a32-14a1-4da8-9881-bf81f0f09897', 'title': 'Star Trek Into Darkness', 'imdb_rating': 7.7}]
 
+expected_person_cache = {'result': [
+    '{"id":"5b4bf1bc-3397-4e83-9b17-8b10c6544ed1","fullname":"Harrison Ford","film_ids":[{"id":"025c58cd-1b7e-43be-9ffb-8571a613579b","title":"Star Wars: Episode VI - Return of the Jedi","imdb_rating":8.3,"role":"actor"},{"id":"0312ed51-8833-413f-bff5-0e139c11264a","title":"Star Wars: Episode V - The Empire Strikes Back","imdb_rating":8.7,"role":"actor"},{"id":"134989c3-3b20-4ae7-8092-3e8ad2333d59","title":"The Star Wars Holiday Special","imdb_rating":2.1,"role":"actor"},{"id":"3b1d0e70-42e5-4c9b-98cf-2681c420a99b","title":"From \'Star Wars\' to \'Jedi\': The Making of a Saga","imdb_rating":7.7,"role":"actor"},{"id":"3d825f60-9fff-4dfe-b294-1a45fa1e115d","title":"Star Wars: Episode IV - A New Hope","imdb_rating":8.6,"role":"actor"},{"id":"4f53452f-a402-4a76-89fd-f034eeb8d657","title":"Star Wars: Episode V - The Empire Strikes Back: Deleted Scenes","imdb_rating":7.6,"role":"actor"},{"id":"b6b8a3b7-1c12-45a8-9da7-4b20db8867df","title":"Star Wars","imdb_rating":7.8,"role":"actor"},{"id":"c7bd11a4-30bf-4077-a618-97c3e5525427","title":"The Characters of \'Star Wars\'","imdb_rating":6.7,"role":"actor"},{"id":"cddf9b8f-27f9-4fe9-97cb-9e27d4fe3394","title":"Star Wars: Episode VII - The Force Awakens","imdb_rating":7.9,"role":"actor"},{"id":"dbb9b244-483b-4592-9194-4938338419bc","title":"Quentin Tarantino\'s Star Wars","imdb_rating":4.8,"role":"actor"},{"id":"f241a62c-2157-432a-bbeb-9c579c8bc18b","title":"Star Wars: Episode IV: A New Hope - Deleted Scenes","imdb_rating":8.4,"role":"actor"}]}']}
+
 
 @pytest.mark.asyncio
-async def test_film_search(make_get_request, es_client):
+async def test_film_search_query(make_get_request, es_client):
     response = await make_get_request(method='/film/search', params={'query': 'war'})
     assert response.status == http.HTTPStatus.OK
     assert len(response.body) == len(expected_films)
     assert response.body == expected_films
 
+
+@pytest.mark.asyncio
+async def test_film_search_filter(make_get_request, es_client):
     response = await make_get_request(method='/film/search',
                                       params={'query': 'trek', "id": "ca88141b-a6b4-450d-bbc3-efa940e4953f",
                                               'page[size]': '20',
@@ -63,6 +70,9 @@ async def test_film_search(make_get_request, es_client):
     assert len(response.body) == len(expected_films_genre_filter)
     assert response.body == expected_films_genre_filter
 
+
+@pytest.mark.asyncio
+async def test_film_search_sorted_desc(make_get_request, es_client):
     response = await make_get_request(method='/film/search',
                                       params={'query': 'trek', "id": "ca88141b-a6b4-450d-bbc3-efa940e4953f",
                                               'page[size]': '20',
@@ -71,6 +81,9 @@ async def test_film_search(make_get_request, es_client):
     assert len(response.body) == len(expected_films_genre_filter)
     assert response.body == sorted(expected_films_genre_filter, key=lambda x: x['imdb_rating'], reverse=True)
 
+
+@pytest.mark.asyncio
+async def test_film_search_sorted_asc(make_get_request, es_client):
     response = await make_get_request(method='/film/search',
                                       params={'query': 'trek', "id": "ca88141b-a6b4-450d-bbc3-efa940e4953f",
                                               'page[size]': '20',
@@ -79,6 +92,9 @@ async def test_film_search(make_get_request, es_client):
     assert len(response.body) == len(expected_films_genre_filter)
     assert response.body == sorted(expected_films_genre_filter, key=lambda x: x['imdb_rating'], reverse=False)
 
+
+@pytest.mark.asyncio
+async def test_film_search_paginator(make_get_request, es_client):
     response = await make_get_request(method='/film/search',
                                       params={'query': 'trek', "id": "ca88141b-a6b4-450d-bbc3-efa940e4953f",
                                               'page[size]': '2', 'page[number]': '3',
@@ -89,8 +105,17 @@ async def test_film_search(make_get_request, es_client):
 
 
 @pytest.mark.asyncio
-async def test_person_search(make_get_request, es_client, redis_client):
+async def test_person_search(make_get_request, es_client):
     response = await make_get_request(method='/person/search', params={'query': 'ford'})
     assert response.status == http.HTTPStatus.OK
     assert len(response.body) == len(expected_person)
     assert response.body == expected_person
+
+
+@pytest.mark.asyncio
+async def test_person_search_cached(make_get_request, es_client, redis_client):
+    response = await make_get_request(method='/person/search', params={'query': 'ford'})
+    assert response.status == http.HTTPStatus.OK
+    data = await redis_client.get('person::query::bool::must::multi_match::query::ford')
+    data_json = json.loads(data)
+    assert data_json == expected_person_cache
