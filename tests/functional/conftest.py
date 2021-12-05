@@ -1,10 +1,15 @@
 from dataclasses import dataclass
 
+import asyncio
+from dataclasses import dataclass
+
 import aiohttp
 import aioredis
 import pytest
 from elasticsearch import AsyncElasticsearch
 from functional import settings
+from functional.utils.elastic_wrapper import ElasticWrapper
+from multidict import CIMultiDictProxy
 from functional.testdata.test_data_manager import TestDataManager
 from multidict import CIMultiDictProxy
 
@@ -18,23 +23,31 @@ class HTTPResponse:
     status: int
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
+def event_loop():
+    loop = asyncio.get_event_loop()
+    yield loop
+    loop.close()
+
+
+@pytest.fixture(scope='session')
 async def es_client():
     client = AsyncElasticsearch(hosts=f"{settings.ELASTIC_HOST}:{settings.ELASTIC_PORT}")
     yield client
     await client.close()
 
 
-@pytest.fixture
+@pytest.fixture(scope='session')
 async def redis_client():
     redis = await aioredis.create_redis_pool((settings.REDIS_HOST, settings.REDIS_PORT), minsize=10, maxsize=20)
     yield redis
     await redis.flushall(async_op=True)
     redis.close()
+    redis.wait_closed()
     await redis.wait_closed()
 
 
-@pytest.fixture
+@pytest.fixture(scope='session')
 async def session(es_client, redis_client):
     session = aiohttp.ClientSession()
     test_data_manager = TestDataManager(elastic_client=es_client)
@@ -48,12 +61,11 @@ async def session(es_client, redis_client):
 def make_get_request(session):
     async def inner(method: str, params: dict = None) -> HTTPResponse:
         params = params or {}
-        url = SERVICE_URL + "/api/v1" + method  # в боевых системах старайтесь так не делать!
+        url = f"{SERVICE_URL}/api/v1{method}"  # в боевых системах старайтесь так не делать!
         async with session.get(url, params=params) as response:
             return HTTPResponse(
                 body=await response.json(),
                 headers=response.headers,
                 status=response.status,
             )
-
     return inner

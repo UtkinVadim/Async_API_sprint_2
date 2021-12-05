@@ -1,0 +1,812 @@
+[
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "id": "26e83050-29ef-4163-a99d-b546cac208f8",
+    "_score": 1.0,
+    "_source": {
+      "id": "26e83050-29ef-4163-a99d-b546cac208f8",
+      "fullname": "Mark Hamill",
+      "film_ids": [
+        {
+          "id": "025c58cd-1b7e-43be-9ffb-8571a613579b",
+          "title": "Star Wars: Episode VI - Return of the Jedi",
+          "imdb_rating": 8.3,
+          "role": "actor"
+        },
+        {
+          "id": "0312ed51-8833-413f-bff5-0e139c11264a",
+          "title": "Star Wars: Episode V - The Empire Strikes Back",
+          "imdb_rating": 8.7,
+          "role": "actor"
+        },
+        {
+          "id": "12a8279d-d851-4eb9-9d64-d690455277cc",
+          "title": "Star Wars: Episode VIII - The Last Jedi",
+          "imdb_rating": 7.0,
+          "role": "actor"
+        },
+        {
+          "id": "134989c3-3b20-4ae7-8092-3e8ad2333d59",
+          "title": "The Star Wars Holiday Special",
+          "imdb_rating": 2.1,
+          "role": "actor"
+        },
+        {
+          "id": "3a28f10a-433e-431c-8e7b-cc3f90af5a41",
+          "title": "The Making of 'Star Wars'",
+          "imdb_rating": 7.5,
+          "role": "actor"
+        },
+        {
+          "id": "3b1d0e70-42e5-4c9b-98cf-2681c420a99b",
+          "title": "From 'Star Wars' to 'Jedi': The Making of a Saga",
+          "imdb_rating": 7.7,
+          "role": "actor"
+        },
+        {
+          "id": "3d825f60-9fff-4dfe-b294-1a45fa1e115d",
+          "title": "Star Wars: Episode IV - A New Hope",
+          "imdb_rating": 8.6,
+          "role": "actor"
+        },
+        {
+          "id": "46f15353-2add-415d-9782-fa9c5b8083d5",
+          "title": "Star Wars: Episode IX - The Rise of Skywalker",
+          "imdb_rating": 6.7,
+          "role": "actor"
+        },
+        {
+          "id": "943946ed-4a2b-4c71-8e0b-a58a11bd1323",
+          "title": "Star Wars: Evolution of the Lightsaber Duel",
+          "imdb_rating": 6.8,
+          "role": "actor"
+        },
+        {
+          "id": "b6b8a3b7-1c12-45a8-9da7-4b20db8867df",
+          "title": "Star Wars",
+          "imdb_rating": 7.8,
+          "role": "actor"
+        },
+        {
+          "id": "c7bd11a4-30bf-4077-a618-97c3e5525427",
+          "title": "The Characters of 'Star Wars'",
+          "imdb_rating": 6.7,
+          "role": "actor"
+        },
+        {
+          "id": "cddf9b8f-27f9-4fe9-97cb-9e27d4fe3394",
+          "title": "Star Wars: Episode VII - The Force Awakens",
+          "imdb_rating": 7.9,
+          "role": "actor"
+        },
+        {
+          "id": "d4b010a5-2648-4850-b15d-307658020923",
+          "title": "Lego Star Wars: Revenge of the Brick",
+          "imdb_rating": 6.1,
+          "role": "director"
+        },
+        {
+          "id": "dbb9b244-483b-4592-9194-4938338419bc",
+          "title": "Quentin Tarantino's Star Wars",
+          "imdb_rating": 4.8,
+          "role": "actor"
+        }
+      ]
+    }
+  },
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "_id": "5b4bf1bc-3397-4e83-9b17-8b10c6544ed1",
+    "_score": 1.0,
+    "_source": {
+      "id": "5b4bf1bc-3397-4e83-9b17-8b10c6544ed1",
+      "fullname": "Harrison Ford",
+      "film_ids": [
+        {
+          "id": "025c58cd-1b7e-43be-9ffb-8571a613579b",
+          "title": "Star Wars: Episode VI - Return of the Jedi",
+          "imdb_rating": 8.3,
+          "role": "actor"
+        },
+        {
+          "id": "0312ed51-8833-413f-bff5-0e139c11264a",
+          "title": "Star Wars: Episode V - The Empire Strikes Back",
+          "imdb_rating": 8.7,
+          "role": "actor"
+        },
+        {
+          "id": "134989c3-3b20-4ae7-8092-3e8ad2333d59",
+          "title": "The Star Wars Holiday Special",
+          "imdb_rating": 2.1,
+          "role": "actor"
+        },
+        {
+          "id": "3b1d0e70-42e5-4c9b-98cf-2681c420a99b",
+          "title": "From 'Star Wars' to 'Jedi': The Making of a Saga",
+          "imdb_rating": 7.7,
+          "role": "actor"
+        },
+        {
+          "id": "3d825f60-9fff-4dfe-b294-1a45fa1e115d",
+          "title": "Star Wars: Episode IV - A New Hope",
+          "imdb_rating": 8.6,
+          "role": "actor"
+        },
+        {
+          "id": "4f53452f-a402-4a76-89fd-f034eeb8d657",
+          "title": "Star Wars: Episode V - The Empire Strikes Back: Deleted Scenes",
+          "imdb_rating": 7.6,
+          "role": "actor"
+        },
+        {
+          "id": "b6b8a3b7-1c12-45a8-9da7-4b20db8867df",
+          "title": "Star Wars",
+          "imdb_rating": 7.8,
+          "role": "actor"
+        },
+        {
+          "id": "c7bd11a4-30bf-4077-a618-97c3e5525427",
+          "title": "The Characters of 'Star Wars'",
+          "imdb_rating": 6.7,
+          "role": "actor"
+        },
+        {
+          "id": "cddf9b8f-27f9-4fe9-97cb-9e27d4fe3394",
+          "title": "Star Wars: Episode VII - The Force Awakens",
+          "imdb_rating": 7.9,
+          "role": "actor"
+        },
+        {
+          "id": "dbb9b244-483b-4592-9194-4938338419bc",
+          "title": "Quentin Tarantino's Star Wars",
+          "imdb_rating": 4.8,
+          "role": "actor"
+        },
+        {
+          "id": "f241a62c-2157-432a-bbeb-9c579c8bc18b",
+          "title": "Star Wars: Episode IV: A New Hope - Deleted Scenes",
+          "imdb_rating": 8.4,
+          "role": "actor"
+        }
+      ]
+    }
+  },
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "_id": "b5d2b63a-ed1f-4e46-8320-cf52a32be358",
+    "_score": 1.0,
+    "_source": {
+      "id": "b5d2b63a-ed1f-4e46-8320-cf52a32be358",
+      "fullname": "Carrie Fisher",
+      "film_ids": [
+        {
+          "id": "025c58cd-1b7e-43be-9ffb-8571a613579b",
+          "title": "Star Wars: Episode VI - Return of the Jedi",
+          "imdb_rating": 8.3,
+          "role": "actor"
+        },
+        {
+          "id": "0312ed51-8833-413f-bff5-0e139c11264a",
+          "title": "Star Wars: Episode V - The Empire Strikes Back",
+          "imdb_rating": 8.7,
+          "role": "actor"
+        },
+        {
+          "id": "12a8279d-d851-4eb9-9d64-d690455277cc",
+          "title": "Star Wars: Episode VIII - The Last Jedi",
+          "imdb_rating": 7.0,
+          "role": "actor"
+        },
+        {
+          "id": "134989c3-3b20-4ae7-8092-3e8ad2333d59",
+          "title": "The Star Wars Holiday Special",
+          "imdb_rating": 2.1,
+          "role": "actor"
+        },
+        {
+          "id": "3d825f60-9fff-4dfe-b294-1a45fa1e115d",
+          "title": "Star Wars: Episode IV - A New Hope",
+          "imdb_rating": 8.6,
+          "role": "actor"
+        },
+        {
+          "id": "46f15353-2add-415d-9782-fa9c5b8083d5",
+          "title": "Star Wars: Episode IX - The Rise of Skywalker",
+          "imdb_rating": 6.7,
+          "role": "actor"
+        },
+        {
+          "id": "4f53452f-a402-4a76-89fd-f034eeb8d657",
+          "title": "Star Wars: Episode V - The Empire Strikes Back: Deleted Scenes",
+          "imdb_rating": 7.6,
+          "role": "actor"
+        },
+        {
+          "id": "cddf9b8f-27f9-4fe9-97cb-9e27d4fe3394",
+          "title": "Star Wars: Episode VII - The Force Awakens",
+          "imdb_rating": 7.9,
+          "role": "actor"
+        },
+        {
+          "id": "f241a62c-2157-432a-bbeb-9c579c8bc18b",
+          "title": "Star Wars: Episode IV: A New Hope - Deleted Scenes",
+          "imdb_rating": 8.4,
+          "role": "actor"
+        }
+      ]
+    }
+  },
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "_id": "e039eedf-4daf-452a-bf92-a0085c68e156",
+    "_score": 1.0,
+    "_source": {
+      "id": "e039eedf-4daf-452a-bf92-a0085c68e156",
+      "fullname": "Peter Cushing",
+      "film_ids": [
+        {
+          "id": "3d825f60-9fff-4dfe-b294-1a45fa1e115d",
+          "title": "Star Wars: Episode IV - A New Hope",
+          "imdb_rating": 8.6,
+          "role": "actor"
+        },
+        {
+          "id": "73ecd1e6-6326-405a-b51b-69008f383b72",
+          "title": "Lego Star Wars: The Complete Saga",
+          "imdb_rating": 8.5,
+          "role": "actor"
+        }
+      ]
+    }
+  },
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "_id": "1989ed1e-0c0b-4872-9dfb-f5ed13c764e2",
+    "_score": 1.0,
+    "_source": {
+      "id": "1989ed1e-0c0b-4872-9dfb-f5ed13c764e2",
+      "fullname": "Irvin Kershner",
+      "film_ids": [
+        {
+          "id": "0312ed51-8833-413f-bff5-0e139c11264a",
+          "title": "Star Wars: Episode V - The Empire Strikes Back",
+          "imdb_rating": 8.7,
+          "role": "director"
+        },
+        {
+          "id": "4f53452f-a402-4a76-89fd-f034eeb8d657",
+          "title": "Star Wars: Episode V - The Empire Strikes Back: Deleted Scenes",
+          "imdb_rating": 7.6,
+          "role": "director"
+        },
+        {
+          "id": "a2ff04cc-eede-43fc-a503-07f037be8cc8",
+          "title": "Star Wars: Music by John Williams",
+          "imdb_rating": 8.5,
+          "role": "actor"
+        }
+      ]
+    }
+  },
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "_id": "ed149438-4d76-45c9-861b-d3ed48ccbf0c",
+    "_score": 1.0,
+    "_source": {
+      "id": "ed149438-4d76-45c9-861b-d3ed48ccbf0c",
+      "fullname": "Leigh Brackett",
+      "film_ids": [
+        {
+          "id": "0312ed51-8833-413f-bff5-0e139c11264a",
+          "title": "Star Wars: Episode V - The Empire Strikes Back",
+          "imdb_rating": 8.7,
+          "role": "writer"
+        },
+        {
+          "id": "4f53452f-a402-4a76-89fd-f034eeb8d657",
+          "title": "Star Wars: Episode V - The Empire Strikes Back: Deleted Scenes",
+          "imdb_rating": 7.6,
+          "role": "writer"
+        },
+        {
+          "id": "64aa7000-698f-4332-b52f-9469e4d44ee1",
+          "title": "Star Wars: Shadows of the Empire",
+          "imdb_rating": 8.2,
+          "role": "writer"
+        }
+      ]
+    }
+  },
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "_id": "3217bc91-bcfc-44eb-a609-82d228115c50",
+    "_score": 1.0,
+    "_source": {
+      "id": "3217bc91-bcfc-44eb-a609-82d228115c50",
+      "fullname": "Lawrence Kasdan",
+      "film_ids": [
+        {
+          "id": "025c58cd-1b7e-43be-9ffb-8571a613579b",
+          "title": "Star Wars: Episode VI - Return of the Jedi",
+          "imdb_rating": 8.3,
+          "role": "writer"
+        },
+        {
+          "id": "0312ed51-8833-413f-bff5-0e139c11264a",
+          "title": "Star Wars: Episode V - The Empire Strikes Back",
+          "imdb_rating": 8.7,
+          "role": "writer"
+        },
+        {
+          "id": "4f53452f-a402-4a76-89fd-f034eeb8d657",
+          "title": "Star Wars: Episode V - The Empire Strikes Back: Deleted Scenes",
+          "imdb_rating": 7.6,
+          "role": "writer"
+        },
+        {
+          "id": "57beb3fd-b1c9-4f8a-9c06-2da13f95251c",
+          "title": "Solo: A Star Wars Story",
+          "imdb_rating": 6.9,
+          "role": "writer"
+        },
+        {
+          "id": "64aa7000-698f-4332-b52f-9469e4d44ee1",
+          "title": "Star Wars: Shadows of the Empire",
+          "imdb_rating": 8.2,
+          "role": "writer"
+        },
+        {
+          "id": "835dcbe5-2bbc-40a3-8980-eb5605f0e3bf",
+          "title": "The Force Is with Them: The Legacy of 'Star Wars'",
+          "imdb_rating": 7.0,
+          "role": "actor"
+        },
+        {
+          "id": "cddf9b8f-27f9-4fe9-97cb-9e27d4fe3394",
+          "title": "Star Wars: Episode VII - The Force Awakens",
+          "imdb_rating": 7.9,
+          "role": "writer"
+        }
+      ]
+    }
+  },
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "_id": "efdd1787-8871-4aa9-b1d7-f68e55b913ed",
+    "_score": 1.0,
+    "_source": {
+      "id": "efdd1787-8871-4aa9-b1d7-f68e55b913ed",
+      "fullname": "Billy Dee Williams",
+      "film_ids": [
+        {
+          "id": "025c58cd-1b7e-43be-9ffb-8571a613579b",
+          "title": "Star Wars: Episode VI - Return of the Jedi",
+          "imdb_rating": 8.3,
+          "role": "actor"
+        },
+        {
+          "id": "0312ed51-8833-413f-bff5-0e139c11264a",
+          "title": "Star Wars: Episode V - The Empire Strikes Back",
+          "imdb_rating": 8.7,
+          "role": "actor"
+        },
+        {
+          "id": "49a81ffc-1670-4dcd-bbec-e224064cf99c",
+          "title": "Star Wars Cantina Karaoke",
+          "imdb_rating": 6.7,
+          "role": "actor"
+        },
+        {
+          "id": "7dc44185-c268-476d-8b0e-488a091c1d4b",
+          "title": "Star Wars: Jedi Knight II - Jedi Outcast",
+          "imdb_rating": 8.6,
+          "role": "actor"
+        }
+      ]
+    }
+  },
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "_id": "3214cf58-8dbf-40ab-9185-77213933507e",
+    "_score": 1.0,
+    "_source": {
+      "id": "3214cf58-8dbf-40ab-9185-77213933507e",
+      "fullname": "Richard Marquand",
+      "film_ids": [
+        {
+          "id": "025c58cd-1b7e-43be-9ffb-8571a613579b",
+          "title": "Star Wars: Episode VI - Return of the Jedi",
+          "imdb_rating": 8.3,
+          "role": "director"
+        }
+      ]
+    }
+  },
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "_id": "a1758395-9578-41af-88b8-3f9456e6d938",
+    "_score": 1.0,
+    "_source": {
+      "id": "a1758395-9578-41af-88b8-3f9456e6d938",
+      "fullname": "J.J. Abrams",
+      "film_ids": [
+        {
+          "id": "075587eb-91c1-4629-adcb-67c516cdb6eb",
+          "title": "Star Trek: A New Vision",
+          "imdb_rating": 6.8,
+          "role": "actor"
+        },
+        {
+          "id": "1d42ceae-9397-475c-9517-e94dda7bc2a1",
+          "title": "Star Wars: Episode VII - The Force Awakens: The Story Awakens - The Table Read",
+          "imdb_rating": 7.2,
+          "role": "actor"
+        },
+        {
+          "id": "1dcfed00-a0a1-4042-9811-66d7eb5d94bb",
+          "title": "Star Wars: Launch Bay - Meet the Makers",
+          "imdb_rating": 6.4,
+          "role": "actor"
+        },
+        {
+          "id": "24ef3514-6def-46ff-bf8e-c9bb91aafdfd",
+          "title": "Star Trek: Secrets of the Universe",
+          "imdb_rating": 7.7,
+          "role": "actor"
+        },
+        {
+          "id": "46f15353-2add-415d-9782-fa9c5b8083d5",
+          "title": "Star Wars: Episode IX - The Rise of Skywalker",
+          "imdb_rating": 6.7,
+          "role": "director"
+        },
+        {
+          "id": "49908121-c711-44ee-b447-84288b3b5e34",
+          "title": "Star Wars: Greatest Moments",
+          "imdb_rating": 6.3,
+          "role": "actor"
+        },
+        {
+          "id": "4af6c9c9-0be0-4864-b1e9-7f87dd59ee1f",
+          "title": "Star Trek",
+          "imdb_rating": 7.9,
+          "role": "director"
+        },
+        {
+          "id": "4e9f5f72-aa45-4c5a-965b-fc9cf42c4299",
+          "title": "Star Trek: The Gag Reel",
+          "imdb_rating": 7.3,
+          "role": "actor"
+        },
+        {
+          "id": "6ecc7a32-14a1-4da8-9881-bf81f0f09897",
+          "title": "Star Trek Into Darkness",
+          "imdb_rating": 7.7,
+          "role": "director"
+        },
+        {
+          "id": "86607a8f-bc90-47fa-8261-15647186cbf5",
+          "title": "50 Years of Star Trek",
+          "imdb_rating": 7.0,
+          "role": "actor"
+        },
+        {
+          "id": "a99bbda2-d244-4b38-b32c-761248fb0bf2",
+          "title": "Star Trek: Starships",
+          "imdb_rating": 6.0,
+          "role": "actor"
+        },
+        {
+          "id": "cddf9b8f-27f9-4fe9-97cb-9e27d4fe3394",
+          "title": "Star Wars: Episode VII - The Force Awakens",
+          "imdb_rating": 7.9,
+          "role": "director"
+        },
+        {
+          "id": "eb592ca7-7aa8-44ac-a59b-1ffcd0b78960",
+          "title": "Star Trek: Gene Rodenberry's Vision",
+          "imdb_rating": 6.6,
+          "role": "actor"
+        }
+      ]
+    }
+  },
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "_id": "cec00f0e-200b-4b48-9ed1-2f8fc3c67427",
+    "_score": 1.0,
+    "_source": {
+      "id": "cec00f0e-200b-4b48-9ed1-2f8fc3c67427",
+      "fullname": "Michael Arndt",
+      "film_ids": [
+        {
+          "id": "cddf9b8f-27f9-4fe9-97cb-9e27d4fe3394",
+          "title": "Star Wars: Episode VII - The Force Awakens",
+          "imdb_rating": 7.9,
+          "role": "writer"
+        }
+      ]
+    }
+  },
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "_id": "2d6f6284-13ce-4d25-9453-c4335432c116",
+    "_score": 1.0,
+    "_source": {
+      "id": "2d6f6284-13ce-4d25-9453-c4335432c116",
+      "fullname": "Adam Driver",
+      "film_ids": [
+        {
+          "id": "12a8279d-d851-4eb9-9d64-d690455277cc",
+          "title": "Star Wars: Episode VIII - The Last Jedi",
+          "imdb_rating": 7.0,
+          "role": "actor"
+        },
+        {
+          "id": "1d42ceae-9397-475c-9517-e94dda7bc2a1",
+          "title": "Star Wars: Episode VII - The Force Awakens: The Story Awakens - The Table Read",
+          "imdb_rating": 7.2,
+          "role": "actor"
+        },
+        {
+          "id": "46f15353-2add-415d-9782-fa9c5b8083d5",
+          "title": "Star Wars: Episode IX - The Rise of Skywalker",
+          "imdb_rating": 6.7,
+          "role": "actor"
+        },
+        {
+          "id": "91f02795-7628-4ef4-acf2-d93b892365dd",
+          "title": "Star Wars: Rise of the Resistance",
+          "imdb_rating": 7.7,
+          "role": "actor"
+        },
+        {
+          "id": "cddf9b8f-27f9-4fe9-97cb-9e27d4fe3394",
+          "title": "Star Wars: Episode VII - The Force Awakens",
+          "imdb_rating": 7.9,
+          "role": "actor"
+        }
+      ]
+    }
+  },
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "_id": "979996d5-ef97-427d-a0f5-d640cd1813a4",
+    "_score": 1.0,
+    "_source": {
+      "id": "979996d5-ef97-427d-a0f5-d640cd1813a4",
+      "fullname": "Jake Lloyd",
+      "film_ids": [
+        {
+          "id": "08a588bd-5eeb-4cf3-8a42-f20195a02c25",
+          "title": "Star Wars: Episode I - Racer",
+          "imdb_rating": 7.7,
+          "role": "actor"
+        },
+        {
+          "id": "17f634cd-9581-4ba1-b40b-89ee058c3f55",
+          "title": "Star Wars: Episode I - Jedi Power Battles",
+          "imdb_rating": 7.1,
+          "role": "actor"
+        },
+        {
+          "id": "3b914679-1f5e-4cbd-8044-d13d35d5236c",
+          "title": "Star Wars: Episode I - The Phantom Menace",
+          "imdb_rating": 6.5,
+          "role": "actor"
+        },
+        {
+          "id": "569e23df-7e00-459d-b92a-6cb4653d36b8",
+          "title": "Star Wars: Episode I - The Phantom Menace",
+          "imdb_rating": 6.6,
+          "role": "actor"
+        },
+        {
+          "id": "7a87274a-541a-405c-b148-5946f6c707d4",
+          "title": "Star Wars: Racer Revenge",
+          "imdb_rating": 7.2,
+          "role": "actor"
+        },
+        {
+          "id": "c5653bd8-56b5-4530-90b2-34ce1a2ba6db",
+          "title": "Star Wars: Galactic Battlegrounds",
+          "imdb_rating": 7.9,
+          "role": "actor"
+        },
+        {
+          "id": "ec8bad1c-7643-49b3-93b5-cee9c8c1e602",
+          "title": "Star Wars: Super Bombad Racing",
+          "imdb_rating": 7.5,
+          "role": "actor"
+        }
+      ]
+    }
+  },
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "_id": "39abe5bd-33b3-44e8-8c12-2e360e2fa621",
+    "_score": 1.0,
+    "_source": {
+      "id": "39abe5bd-33b3-44e8-8c12-2e360e2fa621",
+      "fullname": "Liam Neeson",
+      "film_ids": [
+        {
+          "id": "3b914679-1f5e-4cbd-8044-d13d35d5236c",
+          "title": "Star Wars: Episode I - The Phantom Menace",
+          "imdb_rating": 6.5,
+          "role": "actor"
+        }
+      ]
+    }
+  },
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "_id": "69b02c62-a329-414d-83c6-ca54be34de24",
+    "_score": 1.0,
+    "_source": {
+      "id": "69b02c62-a329-414d-83c6-ca54be34de24",
+      "fullname": "Ewan McGregor",
+      "film_ids": [
+        {
+          "id": "3b914679-1f5e-4cbd-8044-d13d35d5236c",
+          "title": "Star Wars: Episode I - The Phantom Menace",
+          "imdb_rating": 6.5,
+          "role": "actor"
+        },
+        {
+          "id": "516f91da-bd70-4351-ba6d-25e16b7713b7",
+          "title": "Star Wars: Episode III - Revenge of the Sith",
+          "imdb_rating": 7.5,
+          "role": "actor"
+        },
+        {
+          "id": "943946ed-4a2b-4c71-8e0b-a58a11bd1323",
+          "title": "Star Wars: Evolution of the Lightsaber Duel",
+          "imdb_rating": 6.8,
+          "role": "actor"
+        },
+        {
+          "id": "c4c5e3de-c0c9-4091-b242-ceb331004dfd",
+          "title": "Star Wars: Episode II - Attack of the Clones",
+          "imdb_rating": 6.5,
+          "role": "actor"
+        }
+      ]
+    }
+  },
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "_id": "c777f646-dae0-466f-867a-bc535a0b021b",
+    "_score": 1.0,
+    "_source": {
+      "id": "c777f646-dae0-466f-867a-bc535a0b021b",
+      "fullname": "Natalie Portman",
+      "film_ids": [
+        {
+          "id": "3b914679-1f5e-4cbd-8044-d13d35d5236c",
+          "title": "Star Wars: Episode I - The Phantom Menace",
+          "imdb_rating": 6.5,
+          "role": "actor"
+        },
+        {
+          "id": "516f91da-bd70-4351-ba6d-25e16b7713b7",
+          "title": "Star Wars: Episode III - Revenge of the Sith",
+          "imdb_rating": 7.5,
+          "role": "actor"
+        },
+        {
+          "id": "c4c5e3de-c0c9-4091-b242-ceb331004dfd",
+          "title": "Star Wars: Episode II - Attack of the Clones",
+          "imdb_rating": 6.5,
+          "role": "actor"
+        }
+      ]
+    }
+  },
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "_id": "62df10e8-244d-4c31-b396-564dfbc2f9c5",
+    "_score": 1.0,
+    "_source": {
+      "id": "62df10e8-244d-4c31-b396-564dfbc2f9c5",
+      "fullname": "Hayden Christensen",
+      "film_ids": [
+        {
+          "id": "516f91da-bd70-4351-ba6d-25e16b7713b7",
+          "title": "Star Wars: Episode III - Revenge of the Sith",
+          "imdb_rating": 7.5,
+          "role": "actor"
+        },
+        {
+          "id": "c4c5e3de-c0c9-4091-b242-ceb331004dfd",
+          "title": "Star Wars: Episode II - Attack of the Clones",
+          "imdb_rating": 6.5,
+          "role": "actor"
+        },
+        {
+          "id": "daae47e4-cbd0-4ffd-a150-55201b357d5b",
+          "title": "Lego Star Wars: The Video Game",
+          "imdb_rating": 8.2,
+          "role": "actor"
+        }
+      ]
+    }
+  },
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "_id": "7214e401-bb43-4da2-9e7a-cd6ca31ee8ca",
+    "_score": 1.0,
+    "_source": {
+      "id": "7214e401-bb43-4da2-9e7a-cd6ca31ee8ca",
+      "fullname": "Ian McDiarmid",
+      "film_ids": [
+        {
+          "id": "516f91da-bd70-4351-ba6d-25e16b7713b7",
+          "title": "Star Wars: Episode III - Revenge of the Sith",
+          "imdb_rating": 7.5,
+          "role": "actor"
+        },
+        {
+          "id": "a20566a2-b3ec-4814-ae9a-040aabcb38e7",
+          "title": "Star Wars: A Musical Journey",
+          "imdb_rating": 8.6,
+          "role": "actor"
+        }
+      ]
+    }
+  },
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "_id": "8c220eeb-8022-44d5-8435-1f8edf258ac7",
+    "_score": 1.0,
+    "_source": {
+      "id": "8c220eeb-8022-44d5-8435-1f8edf258ac7",
+      "fullname": "Jonathan Hales",
+      "film_ids": [
+        {
+          "id": "c4c5e3de-c0c9-4091-b242-ceb331004dfd",
+          "title": "Star Wars: Episode II - Attack of the Clones",
+          "imdb_rating": 6.5,
+          "role": "writer"
+        }
+      ]
+    }
+  },
+  {
+    "_index": "person",
+    "_type": "_doc",
+    "_id": "ef1e2ad4-df4f-4fe0-8fa9-b8db690c4a19",
+    "_score": 1.0,
+    "_source": {
+      "id": "ef1e2ad4-df4f-4fe0-8fa9-b8db690c4a19",
+      "fullname": "Christopher Lee",
+      "film_ids": [
+        {
+          "id": "c4c5e3de-c0c9-4091-b242-ceb331004dfd",
+          "title": "Star Wars: Episode II - Attack of the Clones",
+          "imdb_rating": 6.5,
+          "role": "actor"
+        }
+      ]
+    }
+  }
+]

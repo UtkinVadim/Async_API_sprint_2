@@ -1,27 +1,18 @@
 FROM python:3.9.7-slim
-WORKDIR /app
+WORKDIR /functional
 
 ENV PYTHONDONTWRITEBYTECODE 1
 
-# FIXME дописать как будет инф-ра тестов
-
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-RUN apt update && apt install netcat -y
-#
-#COPY src .
-#COPY .env .
-#
+
+COPY . .
+
 ARG USER=fastapi_tests
 RUN addgroup --system ${USER} && \
     adduser --system --no-create-home --ingroup ${USER} ${USER} && \
-    chown -R ${USER}:${USER} /app
+    chown -R ${USER}:${USER} /functional
 USER $USER
-#
-#RUN chmod +x wait_for_elastic.sh
-#
-#EXPOSE 8000
-#
-#ENTRYPOINT ["./wait_for_elastic.sh"]
-#
-#CMD ["python", "-m", "main"]
+
+ENV PYTHONPATH "${PYTHONPATH}:/app"
+ENTRYPOINT ["/bin/sh", "-c", "python utils/wait_for_redis.py && python utils/wait_for_es.py && pytest src --pastebin=all"]
