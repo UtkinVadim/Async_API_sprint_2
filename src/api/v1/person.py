@@ -17,17 +17,17 @@ router = APIRouter()
             tags=['полнотекстовый поиск', 'персоналии'],
             )
 async def person_search(
-        query: str = Query(
-            ...,
+        query: Optional[str] = Query(
+            "",
             title="запрос",
             description="Поисковый запрос",
         ),
-        page_number: Optional[int] = Query(
+        page_number: Optional[str] = Query(
             None, alias="page[number]",
             title="страница",
             description="Порядковый номер страницы результатов",
         ),
-        page_size: Optional[int] = Query(
+        page_size: Optional[str] = Query(
             None, alias="page[size]",
             title="размер страницы",
             description="Количество документов на странице",
