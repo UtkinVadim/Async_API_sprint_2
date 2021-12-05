@@ -34,7 +34,7 @@ def event_loop():
     loop.close()
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture()
 async def es_client():
     client = ElasticWrapper(hosts=f"{settings.ELASTIC_HOST}:{settings.ELASTIC_PORT}")
 
@@ -47,14 +47,12 @@ async def es_client():
 
     yield client
 
-    for index_name in indexes_dict.keys():
-        await client.delete_data(index_name=index_name)
-        await client.delete_index(index_name=index_name)
+    await client.delete_index(index_name="*")
 
     await client.close()
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture()
 async def redis_client():
     redis = await aioredis.create_redis_pool((settings.REDIS_HOST, settings.REDIS_PORT), minsize=10, maxsize=20)
     await redis.flushall()
@@ -70,7 +68,6 @@ async def session():
     await session.close()
 
 
-
 @pytest.fixture
 def make_get_request(session):
     async def inner(method: str, params: dict = None) -> HTTPResponse:
@@ -82,4 +79,5 @@ def make_get_request(session):
                 headers=response.headers,
                 status=response.status,
             )
+
     return inner
