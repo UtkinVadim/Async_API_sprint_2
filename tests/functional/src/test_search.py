@@ -63,7 +63,7 @@ async def test_film_search_query(make_get_request, es_client):
 @pytest.mark.asyncio
 async def test_film_search_filter(make_get_request, es_client):
     response = await make_get_request(method='/film/search',
-                                      params={'query': 'trek', "id": "ca88141b-a6b4-450d-bbc3-efa940e4953f",
+                                      params={'query': 'trek', "filter_genre_id": "ca88141b-a6b4-450d-bbc3-efa940e4953f",
                                               'page[size]': '20',
                                               })
     assert response.status == http.HTTPStatus.OK
@@ -74,7 +74,7 @@ async def test_film_search_filter(make_get_request, es_client):
 @pytest.mark.asyncio
 async def test_film_search_sorted_desc(make_get_request, es_client):
     response = await make_get_request(method='/film/search',
-                                      params={'query': 'trek', "id": "ca88141b-a6b4-450d-bbc3-efa940e4953f",
+                                      params={'query': 'trek', "filter_genre_id": "ca88141b-a6b4-450d-bbc3-efa940e4953f",
                                               'page[size]': '20',
                                               'sort': '-imdb_rating'})
     assert response.status == http.HTTPStatus.OK
@@ -85,7 +85,7 @@ async def test_film_search_sorted_desc(make_get_request, es_client):
 @pytest.mark.asyncio
 async def test_film_search_sorted_asc(make_get_request, es_client):
     response = await make_get_request(method='/film/search',
-                                      params={'query': 'trek', "id": "ca88141b-a6b4-450d-bbc3-efa940e4953f",
+                                      params={'query': 'trek', "filter_genre_id": "ca88141b-a6b4-450d-bbc3-efa940e4953f",
                                               'page[size]': '20',
                                               'sort': 'imdb_rating'})
     assert response.status == http.HTTPStatus.OK
@@ -96,7 +96,7 @@ async def test_film_search_sorted_asc(make_get_request, es_client):
 @pytest.mark.asyncio
 async def test_film_search_paginator(make_get_request, es_client):
     response = await make_get_request(method='/film/search',
-                                      params={'query': 'trek', "id": "ca88141b-a6b4-450d-bbc3-efa940e4953f",
+                                      params={'query': 'trek', "filter_genre_id": "ca88141b-a6b4-450d-bbc3-efa940e4953f",
                                               'page[size]': '2', 'page[number]': '3',
                                               'sort': 'imdb_rating'})
     assert response.status == http.HTTPStatus.OK
