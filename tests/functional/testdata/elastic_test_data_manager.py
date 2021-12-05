@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from elasticsearch import AsyncElasticsearch
+from elasticsearch import AsyncElasticsearch, helpers
 
 
 class ElasticTestDataManager:
@@ -10,48 +10,57 @@ class ElasticTestDataManager:
         self.test_data_path = Path(__file__).resolve().parent
 
     async def create_elastic_test_data(self):
+        """
+        Метод для наполнения elasticsearch данными для тестов.
+        """
         await self._create_indexes()
         await self._create_test_data()
 
     async def _create_indexes(self):
+        """
+        Метод для создания индексов в elasticsearch.
+        """
         await self._create_index(index="genre", settings_path=f"{self.test_data_path}/genre_index_settings.json")
         await self._create_index(index="person", settings_path=f"{self.test_data_path}/person_index_settings.json")
         await self._create_index(index="movies", settings_path=f"{self.test_data_path}/film_index_settings.json")
 
     async def _create_test_data(self):
-        await self.elastic_client.bulk(
-            body=[
-                {"index": {"_index": "genre", "_id": "1"}},
-                {"id": "1", "name": "Action"},
-                {"index": {"_index": "genre", "_id": "2"}},
-                {"id": "2", "name": "Comedy"},
-                {"index": {"_index": "genre", "_id": "3"}},
-                {"id": "3", "name": "AbraCadabra"},
-                {"index": {"_index": "person", "_id": "1"}},
-                {
-                    "id": "1",
-                    "fullname": "Person 1",
-                    "film_ids": [{"id": "1", "title": "film 1", "imdb_rating": 1, "role": "role 1"}],
-                },
-                {"index": {"_index": "person", "_id": "2"}},
-                {
-                    "id": "2",
-                    "fullname": "Person 2",
-                    "film_ids": [{"id": "2", "title": "film 2", "imdb_rating": 2, "role": "role 2"}],
-                },
-                {"index": {"_index": "person", "_id": "3"}},
-                {
-                    "id": "3",
-                    "fullname": "Person 3",
-                    "film_ids": [{"id": "3", "title": "film 3", "imdb_rating": 3, "role": "role 3"}],
-                },
-            ],
-            refresh=True,
-        )
+        """
+        Метод для создания записей в elasticsearch.
+        """
+        await self._create_test_data_from_file(data_path=f"{self.test_data_path}/films_data.json", index="movies")
+        await self._create_test_data_from_file(data_path=f"{self.test_data_path}/genres_data.json", index="genre")
+        await self._create_test_data_from_file(data_path=f"{self.test_data_path}/persons_data.json", index="person")
+
+    async def _create_test_data_from_file(self, data_path: str, index: str):
+        """
+        Метод для наполнения индекса данными, прочитанными из файла.
+        :param index: имя индекса в который будут загружены данные.
+        :param data_path: Путь к json файлу с данными, которые нужно загрузить.
+        """
+        with open(data_path, "r") as films_data:
+            await helpers.async_bulk(client=self.elastic_client,
+                                     actions=json.load(films_data),
+                                     index=index,
+                                     refresh=True)
 
     async def _create_index(self, settings_path: str, index: str):
-        with open(settings_path, "r") as settings:
-            await self.elastic_client.indices.create(index=index, ignore=400, body=json.loads(settings.read()))
+        """
+        Метод для наполнения индекса данными, прочитанными из файла.
+        :param index: Имя создаваемого индекса.
+        :param settings_path: Путь к json файлу с настройками создаваемого индекса.
+        """
+        with open(settings_path, "r") as index_settings_file:
+            index_settings = json.loads(index_settings_file.read())
+            await self.elastic_client.indices.create(index=index,
+                                                     settings=index_settings["settings"],
+                                                     mappings=index_settings["mappings"],
+                                                     ignore=400)
 
     async def delete_elastic_test_data(self):
-        await self.elastic_client.indices.delete(index="*", ignore=[400, 404])
+        """
+        Метод для удаления всех индексов из elasticsearch.
+        """
+        await self.elastic_client.indices.delete(index="person", ignore=[400, 404])
+        await self.elastic_client.indices.delete(index="genre", ignore=[400, 404])
+        await self.elastic_client.indices.delete(index="movies", ignore=[400, 404])
