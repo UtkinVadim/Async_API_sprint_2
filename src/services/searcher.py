@@ -3,7 +3,9 @@ from abc import ABC, abstractmethod
 from http import HTTPStatus
 from typing import Optional, List
 
-from elasticsearch import AsyncElasticsearch
+import backoff
+
+from elasticsearch import AsyncElasticsearch, exceptions
 from elasticsearch.exceptions import NotFoundError
 from fastapi import HTTPException
 from pydantic import BaseModel
@@ -25,6 +27,7 @@ class ElasticSearcher(Searcher):
     def __init__(self, elastic: AsyncElasticsearch):
         self.elastic = elastic
 
+    @backoff.on_exception(backoff.expo, exceptions.ConnectionError, max_time=300)
     async def get_by_id(self, id_: str, index: str, model: BaseModel) -> Optional[BaseModel]:
         """
         Забирает данные из эластика по id. Результат валидируется моделью.
@@ -40,10 +43,8 @@ class ElasticSearcher(Searcher):
         except NotFoundError as err:
             logger.exception("Ошибка на этапе забора документа из searcher по id")
             raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=err.info)
-        except Exception as err:
-            logger.warning(err, exc_info=True)
-            raise HTTPException(status_code=HTTPStatus.INTERNAL_SERVER_ERROR, detail=err)
 
+    @backoff.on_exception(backoff.expo, exceptions.ConnectionError, max_time=300)
     async def search(self, body: dict, index: str, model: BaseModel) -> Optional[List[BaseModel]]:
         """
         Выполяет поиск в индексе эластика index по запросу body.
