@@ -60,6 +60,7 @@ async def redis_client():
     await redis.flushall()
     yield redis
     redis.close()
+    await redis.wait_closed()
 
 
 @pytest.fixture(scope='session')
