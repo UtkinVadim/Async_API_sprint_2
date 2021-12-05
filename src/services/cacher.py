@@ -2,6 +2,7 @@ import json
 from abc import ABC, abstractmethod
 from typing import Optional, Union, List
 
+import backoff
 from aioredis import Redis
 from pydantic import BaseModel
 
@@ -68,6 +69,7 @@ class RedisCacher(Cacher):
     def __init__(self, redis: Redis):
         self.redis = redis
 
+    @backoff.on_exception(backoff.expo, ConnectionRefusedError, max_time=300)
     async def get(self, key: str, model: BaseModel) -> Optional[BaseModel]:
         """
         # Пытаемся получить данные о фильме из кеша, используя команду get
@@ -89,6 +91,7 @@ class RedisCacher(Cacher):
             obj = model.parse_raw(data)
         return obj
 
+    @backoff.on_exception(backoff.expo, ConnectionRefusedError, max_time=300)
     async def put(
             self,
             obj: Union[BaseModel, List[BaseModel]],
