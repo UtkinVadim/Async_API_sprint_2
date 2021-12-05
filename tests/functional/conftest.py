@@ -44,7 +44,6 @@ async def session(es_client, redis_client):
     await session.close()
 
 
-
 @pytest.fixture
 def make_get_request(session):
     async def inner(method: str, params: dict = None) -> HTTPResponse:
