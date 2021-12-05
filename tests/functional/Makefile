@@ -1,4 +1,8 @@
-.PHONY: init init_debug init_local init_tests down test run
+.PHONY: cp_env init init_debug init_local init_tests down test run
+
+cp_env:
+	cp ../../.env.template ../../.env
+
 init:
 	docker compose --env-file=tests.env up -d --build
 
@@ -20,4 +24,4 @@ down:
 test:
 	pytest src
 
-run: init_local init_tests down
+run: cp_env init_local init_tests down
