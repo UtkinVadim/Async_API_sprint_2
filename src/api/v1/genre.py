@@ -16,7 +16,7 @@ router = APIRouter()
             tags=['полный список', 'жанр'],
             )
 async def genres_list(genre_service: GenreService = Depends(get_genre_service)) -> List[GenreResponse]:
-    genres: list = await genre_service.search(body={})
+    genres: list = await genre_service.search(body={'size': '999'})
     if not genres:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail=GENRE_NOT_FOUND)
     return [GenreResponse(uuid=genre.id, name=genre.name) for genre in genres]

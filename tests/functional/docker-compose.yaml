@@ -1,0 +1,46 @@
+version: '3.9'
+services:
+  redis_test:
+    image: redis:6.2.6-alpine
+    container_name: redis_test
+    ports:
+      - "${REDIS_PORT}:6379"
+    networks:
+      - movies-test
+
+  fastapi_test:
+    build: ../../.
+    container_name: fastapi_test
+    env_file:
+      - .env
+    ports:
+      - "${SERVER_PORT}:8000"
+    networks:
+      - movies-test
+    depends_on:
+      - redis_test
+      - elastic_test
+
+  elastic_test:
+    image: elasticsearch:7.14.2
+    container_name: elastic_test
+    ports:
+      - "${ELASTIC_PORT}:9200"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    networks:
+      - movies-test
+
+  tests:
+    build: .
+    container_name: tests
+    env_file:
+      - tests.env
+    networks:
+      - movies-test
+
+
+networks:
+  movies-test:
+    name: movies-test
