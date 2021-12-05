@@ -39,6 +39,10 @@ services:
       - tests.env
     networks:
       - movies-test
+    depends_on:
+      - fastapi_test
+      - redis_test
+      - elastic_test
 
 
 networks:
