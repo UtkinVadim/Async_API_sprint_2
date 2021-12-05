@@ -1,6 +1,6 @@
 from elasticsearch import AsyncElasticsearch
-
-from functional.testdata.elastic_test_data_manager import ElasticTestDataManager
+from functional.testdata.elastic_test_data_manager import \
+    ElasticTestDataManager
 
 
 class TestDataManager(ElasticTestDataManager):

@@ -28,26 +28,30 @@ class ElasticTestDataManager:
                 {"index": {"_index": "genre", "_id": "3"}},
                 {"id": "3", "name": "AbraCadabra"},
                 {"index": {"_index": "person", "_id": "1"}},
-                {"id": "1", "fullname": "Person 1", "film_ids": [
-                    {"id": "1", "title": "film 1", "imdb_rating": 1, "role": "role 1"}
-                ]},
+                {
+                    "id": "1",
+                    "fullname": "Person 1",
+                    "film_ids": [{"id": "1", "title": "film 1", "imdb_rating": 1, "role": "role 1"}],
+                },
                 {"index": {"_index": "person", "_id": "2"}},
-                {"id": "2", "fullname": "Person 2", "film_ids": [
-                    {"id": "2", "title": "film 2", "imdb_rating": 2, "role": "role 2"}
-                ]},
+                {
+                    "id": "2",
+                    "fullname": "Person 2",
+                    "film_ids": [{"id": "2", "title": "film 2", "imdb_rating": 2, "role": "role 2"}],
+                },
                 {"index": {"_index": "person", "_id": "3"}},
-                {"id": "3", "fullname": "Person 3", "film_ids": [
-                    {"id": "3", "title": "film 3", "imdb_rating": 3, "role": "role 3"}
-                ]},
+                {
+                    "id": "3",
+                    "fullname": "Person 3",
+                    "film_ids": [{"id": "3", "title": "film 3", "imdb_rating": 3, "role": "role 3"}],
+                },
             ],
             refresh=True,
         )
 
     async def _create_index(self, settings_path: str, index: str):
         with open(settings_path, "r") as settings:
-            await self.elastic_client.indices.create(index=index,
-                                                     ignore=400,
-                                                     body=json.loads(settings.read()))
+            await self.elastic_client.indices.create(index=index, ignore=400, body=json.loads(settings.read()))
 
     async def delete_elastic_test_data(self):
         await self.elastic_client.indices.delete(index="*", ignore=[400, 404])

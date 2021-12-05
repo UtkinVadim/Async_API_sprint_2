@@ -1,15 +1,14 @@
+from dataclasses import dataclass
+
 import aiohttp
 import aioredis
 import pytest
-
-from dataclasses import dataclass
-from multidict import CIMultiDictProxy
 from elasticsearch import AsyncElasticsearch
-
 from functional import settings
 from functional.testdata.test_data_manager import TestDataManager
+from multidict import CIMultiDictProxy
 
-SERVICE_URL = 'http://127.0.0.1:8000'
+SERVICE_URL = "http://127.0.0.1:8000"
 
 
 @dataclass
@@ -49,7 +48,7 @@ async def session(es_client, redis_client):
 def make_get_request(session):
     async def inner(method: str, params: dict = None) -> HTTPResponse:
         params = params or {}
-        url = SERVICE_URL + '/api/v1' + method  # в боевых системах старайтесь так не делать!
+        url = SERVICE_URL + "/api/v1" + method  # в боевых системах старайтесь так не делать!
         async with session.get(url, params=params) as response:
             return HTTPResponse(
                 body=await response.json(),
