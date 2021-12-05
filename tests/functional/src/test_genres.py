@@ -1,5 +1,7 @@
 import pytest
 
+from models.genre import Genre
+
 
 @pytest.mark.asyncio
 async def test_all_genres(make_get_request):
@@ -24,7 +26,7 @@ async def test_all_genres(make_get_request):
 
 
 @pytest.mark.asyncio
-async def test_find_specific_genre(make_get_request, es_client):
+async def test_find_specific_genre(make_get_request):
     response = await make_get_request(method='/genre/1')
 
     assert response.status == 200
@@ -33,5 +35,38 @@ async def test_find_specific_genre(make_get_request, es_client):
             'uuid': '1',
             'name': 'Action'
         }
+
+    assert response.body == expected
+
+
+@pytest.mark.asyncio
+async def test_genre_no_found(make_get_request):
+    response = await make_get_request(method='/genre/fake_genre')
+
+    assert response.status == 404
+
+    expected = {
+        'detail': {
+            '_index': 'genre',
+            '_type': '_doc',
+            '_id': 'fake_genre',
+            'found': False
+        }
+    }
+
+    assert response.body == expected
+
+
+@pytest.mark.asyncio
+async def test_find_from_redis_cache(make_get_request, redis_client):
+    await redis_client.set("genre::genre_4", Genre(id="genre_4", name="Genre from cache").json())
+    response = await make_get_request(method='/genre/genre_4')
+
+    assert response.status == 200
+
+    expected = {
+        'uuid': 'genre_4',
+        'name': 'Genre from cache'
+    }
 
     assert response.body == expected
