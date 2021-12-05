@@ -8,15 +8,15 @@ from functional import settings
 from functional.utils.elastic_wrapper import ElasticWrapper
 from multidict import CIMultiDictProxy
 
-SERVICE_URL = 'http://127.0.0.1:8000'
-indexes_dict = {'movies': '../testdata/film_index_settings.json',
-                'genre': '../testdata/genre_index_settings.json',
-                'person': '../testdata/person_index_settings.json',
+SERVICE_URL = f'http://{settings.SERVER_HOST}:{settings.SERVER_PORT}'
+indexes_dict = {'movies': './testdata/film_index_settings.json',
+                'genre': './testdata/genre_index_settings.json',
+                'person': './testdata/person_index_settings.json',
                 }
 
-data_dict = {'movies': '../testdata/films_data.json',
-             'genre': '../testdata/genres_data.json',
-             'person': '../testdata/persons_data.json',
+data_dict = {'movies': './testdata/films_data.json',
+             'genre': './testdata/genres_data.json',
+             'person': './testdata/persons_data.json',
              }
 
 
@@ -75,7 +75,7 @@ async def session():
 def make_get_request(session):
     async def inner(method: str, params: dict = None) -> HTTPResponse:
         params = params or {}
-        url = SERVICE_URL + '/api/v1' + method  # в боевых системах старайтесь так не делать!
+        url = f"{SERVICE_URL}/api/v1{method}"  # в боевых системах старайтесь так не делать!
         async with session.get(url, params=params) as response:
             return HTTPResponse(
                 body=await response.json(),
