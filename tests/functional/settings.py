@@ -1,5 +1,9 @@
 import os
 
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv(raise_error_if_not_found=False))
+
 # Настройки Redis
 REDIS_HOST = os.getenv("REDIS_HOST", "127.0.0.1")
 REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
