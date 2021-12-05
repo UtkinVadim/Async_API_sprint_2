@@ -5,9 +5,9 @@ from elasticsearch import AsyncElasticsearch, helpers
 
 
 class ElasticTestDataManager:
-    def __init__(self, elastic_client: AsyncElasticsearch):
+    def __init__(self, elastic_client: AsyncElasticsearch = None):
         self.elastic_client = elastic_client
-        self.test_data_path = Path(__file__).resolve().parent
+        self.test_data_path = Path(__file__).resolve().parent.parent / "testdata"
 
     async def create_elastic_test_data(self):
         """
