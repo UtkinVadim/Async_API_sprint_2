@@ -27,13 +27,20 @@ class ElasticTestDataManager:
                 {"id": "2", "name": "Comedy"},
                 {"index": {"_index": "genre", "_id": "3"}},
                 {"id": "3", "name": "AbraCadabra"},
-                {"index": {"_index": "movies", "_id": "1"}},
-                {"id": "1", "name": "Action"},
-                {"index": {"_index": "movies", "_id": "2"}},
-                {"id": "2", "name": "Comedy"},
-                {"index": {"_index": "movies", "_id": "3"}},
-                {"id": "3", "name": "AbraCadabra"},
+                {"index": {"_index": "person", "_id": "1"}},
+                {"id": "1", "fullname": "Person 1", "film_ids": [
+                    {"id": "1", "title": "film 1", "imdb_rating": 1, "role": "role 1"}
+                ]},
+                {"index": {"_index": "person", "_id": "2"}},
+                {"id": "2", "fullname": "Person 2", "film_ids": [
+                    {"id": "2", "title": "film 2", "imdb_rating": 2, "role": "role 2"}
+                ]},
+                {"index": {"_index": "person", "_id": "3"}},
+                {"id": "3", "fullname": "Person 3", "film_ids": [
+                    {"id": "3", "title": "film 3", "imdb_rating": 3, "role": "role 3"}
+                ]},
             ],
+            refresh=True,
         )
 
     async def _create_index(self, settings_path: str, index: str):

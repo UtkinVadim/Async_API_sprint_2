@@ -28,19 +28,20 @@ async def es_client():
 
 @pytest.fixture
 async def redis_client():
-    client = await aioredis.create_redis_pool((settings.REDIS_HOST, settings.REDIS_PORT))
-    yield client
-    client.close()
-    await client.wait_closed()
+    redis = await aioredis.create_redis_pool((settings.REDIS_HOST, settings.REDIS_PORT), minsize=10, maxsize=20)
+    yield redis
+    await redis.flushall(async_op=True)
+    redis.close()
+    await redis.wait_closed()
 
 
 @pytest.fixture
 async def session(es_client, redis_client):
     session = aiohttp.ClientSession()
-    test_data_manager = TestDataManager(elastic_client=es_client, redis_client=redis_client)
+    test_data_manager = TestDataManager(elastic_client=es_client)
     await test_data_manager.create_test_data()
     yield session
-    await test_data_manager.delete_test_data()
+    # await test_data_manager.delete_test_data()
     await session.close()
 
 
