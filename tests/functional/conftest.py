@@ -40,7 +40,7 @@ async def session(es_client, redis_client):
     test_data_manager = TestDataManager(elastic_client=es_client)
     await test_data_manager.create_test_data()
     yield session
-    # await test_data_manager.delete_test_data()
+    await test_data_manager.delete_test_data()
     await session.close()
 
 
