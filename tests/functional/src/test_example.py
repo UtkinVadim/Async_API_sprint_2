@@ -46,7 +46,7 @@ expected_cache = {'result': ['{"id":"3d8d9bf5-0d90-4353-88ba-4ccc5d2c07ff","name
 
 
 @pytest.mark.asyncio
-async def test_search_detailed(make_get_request):
+async def test_search_detailed(make_get_request, es_client):
     response = await make_get_request(method='/genre/')
 
     print(response.status)
@@ -57,7 +57,7 @@ async def test_search_detailed(make_get_request):
 
 
 @pytest.mark.asyncio
-async def test_cache_search_detailed(make_get_request, redis_client):
+async def test_cache_search_detailed(make_get_request, es_client, redis_client):
     response = await make_get_request(method='/genre/')
     assert response.status == 200
     data = await redis_client.get('genre::size::999')
