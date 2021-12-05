@@ -57,8 +57,9 @@ async def es_client():
 @pytest.fixture(scope='session')
 async def redis_client():
     redis = await aioredis.create_redis_pool((settings.REDIS_HOST, settings.REDIS_PORT), minsize=10, maxsize=20)
+    await redis.flushall()
     yield redis
-    await redis.close()
+    redis.close()
 
 
 @pytest.fixture(scope='session')
@@ -66,6 +67,7 @@ async def session():
     session = aiohttp.ClientSession()
     yield session
     await session.close()
+
 
 
 @pytest.fixture
