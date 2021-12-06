@@ -1,9 +1,12 @@
 # Async API Team 6
 ___
-**[Ссылка на репозиторий AsyncApi](https://github.com/UtkinVadim/Async_API_sprint_1)**
+**[Ссылка на репозиторий AsyncApi SPRINT 1](https://github.com/UtkinVadim/Async_API_sprint_1)**
 ___
 ___
 **[Ссылка на репозиторий ETL](https://github.com/UtkinVadim/ETL)**
+___
+___
+**[Ссылка на репозиторий AsyncApi SPRINT 2](https://github.com/UtkinVadim/Async_API_sprint_2)**
 ___
 
 ### Разворачивание приложения
