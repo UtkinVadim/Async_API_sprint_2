@@ -39,6 +39,10 @@ services:
       - .env
     networks:
       - movies-test
+    environment:
+      - REDIS_HOST=redis_test
+      - ELASTIC_HOST=elastic_test
+      - SERVER_HOST=fastapi_test
     depends_on:
       - fastapi_test
       - redis_test
