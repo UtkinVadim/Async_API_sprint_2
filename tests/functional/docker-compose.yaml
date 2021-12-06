@@ -17,6 +17,10 @@ services:
       - "${SERVER_PORT}:8000"
     networks:
       - movies-test
+    environment:
+      - REDIS_HOST=redis_test
+      - ELASTIC_HOST=elastic_test
+      - SERVER_HOST=0.0.0.0
     depends_on:
       - redis_test
       - elastic_test
@@ -36,7 +40,11 @@ services:
     build: .
     container_name: tests
     env_file:
-      - tests.env
+      - .env
+    environment:
+      - REDIS_HOST=redis_test
+      - ELASTIC_HOST=elastic_test
+      - SERVER_HOST=fastapi_test
     networks:
       - movies-test
     depends_on:

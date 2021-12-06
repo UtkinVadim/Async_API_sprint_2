@@ -4,4 +4,6 @@
 
 Оценка: 5
 
-Ссылка на PR: pass
+Ссылка на PR:
+* https://github.com/UtkinVadim/ETL/pull/7
+* https://github.com/UtkinVadim/ETL/pull/5

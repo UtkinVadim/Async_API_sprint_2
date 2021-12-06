@@ -4,4 +4,4 @@
 
 Оценка: 5
 
-Ссылка на PR: pass
+Ссылка на PR: https://github.com/UtkinVadim/Async_API_sprint_2/pull/14
