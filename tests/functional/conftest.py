@@ -5,7 +5,7 @@ import aioredis
 import pytest
 from elasticsearch import AsyncElasticsearch
 from functional import settings
-from functional.testdata.test_data_manager import TestDataManager
+from functional.utils.test_data_manager import TestDataManager
 from multidict import CIMultiDictProxy
 
 SERVICE_URL = f"http://{settings.SERVER_HOST}:{settings.SERVER_PORT}"
@@ -21,7 +21,10 @@ class HTTPResponse:
 @pytest.fixture
 async def es_client():
     client = AsyncElasticsearch(hosts=f"{settings.ELASTIC_HOST}:{settings.ELASTIC_PORT}")
+    test_data_manager = TestDataManager(elastic_client=client)
+    await test_data_manager.create_test_data()
     yield client
+    await test_data_manager.delete_test_data()
     await client.close()
 
 
@@ -37,10 +40,7 @@ async def redis_client():
 @pytest.fixture
 async def session(es_client, redis_client):
     session = aiohttp.ClientSession()
-    test_data_manager = TestDataManager(elastic_client=es_client)
-    await test_data_manager.create_test_data()
     yield session
-    await test_data_manager.delete_test_data()
     await session.close()
 
 
