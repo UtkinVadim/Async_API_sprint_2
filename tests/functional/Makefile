@@ -1,13 +1,7 @@
-.PHONY: cp_env_prod cp_env_test cp_env_test_local init init_debug init_local init_tests down test run
-
-cp_env_prod:
-	cp ../../.env.template ../../.env
+.PHONY: cp_env_test init init_debug init_local init_tests down test run
 
 cp_env_test:
 	cp .env.template .env
-
-cp_env_test_local:
-	cp .env.local.template .env
 
 init:
 	docker compose --env-file=.env up -d --build
