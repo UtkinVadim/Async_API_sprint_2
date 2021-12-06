@@ -7,7 +7,7 @@ import elasticsearch
 from settings import ELASTIC_HOST, ELASTIC_PORT
 
 logger = logging.getLogger(__name__)
-log_format = '%(asctime)s %(levelname)s %(filename)s:%(lineno)d %(message)s'
+log_format = "%(asctime)s %(levelname)s %(filename)s:%(lineno)d %(message)s"
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format=log_format)
 
 bold_green = "\x1b[32;1m"
@@ -23,11 +23,11 @@ async def main():
             elastic_answer = await elastic.ping()
             if elastic_answer:
                 elastic_online = True
-                logger.info('Elastic reporting!'.join([bold_green, reset]))
+                logger.info("Elastic reporting!".join([bold_green, reset]))
                 await elastic.close()
         except ConnectionRefusedError:
-            logger.exception('Waiting for elastic...', exc_info=False)
+            logger.exception("Waiting for elastic...", exc_info=False)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     asyncio.run(main())

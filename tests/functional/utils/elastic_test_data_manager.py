@@ -39,10 +39,7 @@ class ElasticTestDataManager:
         :param data_path: Путь к json файлу с данными, которые нужно загрузить.
         """
         with open(data_path, "r") as films_data:
-            await helpers.async_bulk(client=self.elastic_client,
-                                     actions=json.load(films_data),
-                                     index=index,
-                                     refresh=True)
+            await helpers.async_bulk(client=self.elastic_client, actions=json.load(films_data), index=index, refresh=True)
 
     async def _create_index(self, settings_path: str, index: str):
         """
@@ -52,10 +49,9 @@ class ElasticTestDataManager:
         """
         with open(settings_path, "r") as index_settings_file:
             index_settings = json.loads(index_settings_file.read())
-            await self.elastic_client.indices.create(index=index,
-                                                     settings=index_settings["settings"],
-                                                     mappings=index_settings["mappings"],
-                                                     ignore=400)
+            await self.elastic_client.indices.create(
+                index=index, settings=index_settings["settings"], mappings=index_settings["mappings"], ignore=400
+            )
 
     async def delete_elastic_test_data(self):
         """

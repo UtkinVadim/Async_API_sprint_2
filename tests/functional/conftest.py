@@ -55,4 +55,5 @@ def make_get_request(session):
                 headers=response.headers,
                 status=response.status,
             )
+
     return inner
