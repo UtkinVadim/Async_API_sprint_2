@@ -1,7 +1,7 @@
 [
   {
     "_index": "genre",
-    "id": "3d8d9bf5-0d90-4353-88ba-4ccc5d2c07ff",
+    "_id": "3d8d9bf5-0d90-4353-88ba-4ccc5d2c07ff",
     "_score": 1.0,
     "_source": {
       "id": "3d8d9bf5-0d90-4353-88ba-4ccc5d2c07ff",
