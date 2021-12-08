@@ -3,7 +3,9 @@
 ignore = E203, E501, W503,  # handled by black
          A003,
          B008,
-         S101  # это тесты, assert допустим
+         S101,  # это тесты, assert допустим
+         CCR001  # когнитивная сложность
+
 
 exclude =
     .*
