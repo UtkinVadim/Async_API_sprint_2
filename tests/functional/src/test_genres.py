@@ -1,9 +1,9 @@
 import json
 import pytest
 
-from functional.utils.expected_data_parser import ExpectedDataParser
+from functional.utils.expected_data_parser import ExpectedGenre
 
-expected_data_parser = ExpectedDataParser()
+expected_data_parser = ExpectedGenre()
 
 
 @pytest.mark.asyncio
