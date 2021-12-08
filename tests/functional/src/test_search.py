@@ -2,7 +2,7 @@ import http
 import json
 
 import pytest
-from functional.utils.expected_data_parser import ExpectedFilm, ExpectedPerson
+from functional.utils.expected_data_parsers import ExpectedFilm, ExpectedPerson
 
 expected_film_parser = ExpectedFilm()
 expected_person_parser = ExpectedPerson()

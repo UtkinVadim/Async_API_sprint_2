@@ -1,7 +1,7 @@
 import json
-import pytest
 
-from functional.utils.expected_data_parser import ExpectedGenre
+import pytest
+from functional.utils.expected_data_parsers import ExpectedGenre
 
 expected_data_parser = ExpectedGenre()
 

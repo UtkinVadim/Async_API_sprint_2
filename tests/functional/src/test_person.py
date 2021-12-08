@@ -1,7 +1,7 @@
 import json
-import pytest
 
-from functional.utils.expected_data_parser import ExpectedPerson
+import pytest
+from functional.utils.expected_data_parsers import ExpectedPerson
 
 expected_data_parser = ExpectedPerson()
 
@@ -55,7 +55,11 @@ async def test_find_person_from_redis_cache(make_get_request, redis_client):
 
     assert response.status == 200
 
-    expected = {"uuid": "hobbit_id", "full_name": "Bilbo Baggins", "films": [{"1": "Хоббит"}, {"2": "Хоббит"}, {"3": "Хоббит"}]}
+    expected = {
+        "uuid": "hobbit_id",
+        "full_name": "Bilbo Baggins",
+        "films": [{"1": "Хоббит"}, {"2": "Хоббит"}, {"3": "Хоббит"}],
+    }
 
     assert response.body == expected
 
