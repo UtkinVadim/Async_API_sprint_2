@@ -3,9 +3,9 @@ import json
 
 import pytest
 
-from functional.utils.expected_data_parser import ExpectedDataParser
+from functional.utils.expected_data_parser import ExpectedFilm
 
-expected_data_parser = ExpectedDataParser()
+expected_data_parser = ExpectedFilm()
 
 
 @pytest.mark.asyncio
@@ -40,7 +40,6 @@ async def test_film_filter_sorted_desc(make_get_request):
     page_size = 5
     sort = "-imdb_rating"
     response = await make_get_request(
-        # TODO: От апи возвращаются неверные данные.
         method="/film", params={"page[size]": page_size, "sort": sort}
     )
     assert response.status == http.HTTPStatus.OK
@@ -55,22 +54,11 @@ async def test_film_filter_sorted_asc(make_get_request):
     page_size = 3
     sort = "imdb_rating"
     response = await make_get_request(
-        # TODO: Фильтрация по жанрам не работает. Нужно передавать не как id, а как filter[genre],
-        #  но все равно не работает =(
-        method="/film", params={"id": genre_id, "page[size]": page_size, "sort": sort}
+        method="/film", params={"filter[genre]": genre_id, "page[size]": page_size, "sort": sort}
     )
     assert response.status == http.HTTPStatus.OK
-    expected = await expected_data_parser.get_film_data(page_size=page_size, sort_by=sort)
-    # expected = [
-    #     {"id": "a7b11817-205f-4e1a-98b5-e3c48b824bc3", "title": "Star Trek", "imdb_rating": 6.4},
-    #     {"id": "3b914679-1f5e-4cbd-8044-d13d35d5236c", "title": "Star Wars: Episode I - The Phantom Menace", "imdb_rating": 6.5},
-    #     {
-    #         "id": "c4c5e3de-c0c9-4091-b242-ceb331004dfd",
-    #         "title": "Star Wars: Episode II - Attack of the Clones",
-    #         "imdb_rating": 6.5,
-    #     },
-    # ]
-    assert len(response.body) == page_size
+    expected = await expected_data_parser.get_film_data(genre_id=genre_id, page_size=page_size, sort_by=sort)
+    assert len(response.body) == len(expected)
     assert response.body == expected
 
 
