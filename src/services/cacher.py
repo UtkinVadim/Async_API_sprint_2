@@ -3,10 +3,10 @@ from abc import ABC, abstractmethod
 from typing import List, Optional, Union
 
 import backoff
-from aioredis import Redis
 from pydantic import BaseModel
 
 from core.config import CACHE_EXPIRE_IN_SECONDS
+from db.redis import get_redis
 
 
 class Cacher(ABC):
@@ -68,8 +68,8 @@ class Cacher(ABC):
 
 
 class RedisCacher(Cacher):
-    def __init__(self, redis: Redis):
-        self.redis = redis
+    def __init__(self):
+        self.redis = get_redis()
 
     @backoff.on_exception(backoff.expo, ConnectionRefusedError, max_time=300)
     async def get(self, key: str, model: BaseModel) -> Optional[BaseModel]:
@@ -115,3 +115,7 @@ class RedisCacher(Cacher):
         else:
             data_to_cache = obj.json()
         await self.redis.set(key, data_to_cache, expire=CACHE_EXPIRE_IN_SECONDS)
+
+
+async def get_redis_extended() -> RedisCacher:
+    return RedisCacher()

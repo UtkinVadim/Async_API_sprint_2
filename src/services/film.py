@@ -4,11 +4,10 @@ from functools import lru_cache
 from fastapi import Depends
 
 from db.elastic import get_elastic
-from db.redis import get_redis
 from models.film import Film
 from models.genre import Genre
 from services.base_service import BaseService
-from services.cacher import Cacher
+from services.cacher import Cacher, get_redis_extended
 from services.searcher import Searcher
 
 logger = logging.getLogger(__name__)
@@ -35,7 +34,7 @@ class FilmService(BaseService):
 
 @lru_cache()
 def get_film_service(
-    cache_engine: Cacher = Depends(get_redis),
+    cache_engine: Cacher = Depends(get_redis_extended),
     search_engine: Searcher = Depends(get_elastic),
 ) -> FilmService:
     return FilmService(cacher=cache_engine, searcher=search_engine)
