@@ -16,10 +16,12 @@ async def generate_body(query, from_, size) -> dict:
 
     body = {"query": {"bool": {"must": [match]}}}
 
-    if from_:
-        body["from"] = from_
     if size:
         body["size"] = size
+    else:
+        size = 10
+    if from_:
+        body["from"] = str((int(from_) - 1) * int(size))
 
     return body
 
