@@ -1,10 +1,9 @@
 import logging
 from abc import ABC, abstractmethod
 from http import HTTPStatus
-from typing import Optional, List
+from typing import List, Optional
 
 import backoff
-
 from elasticsearch import AsyncElasticsearch, exceptions
 from elasticsearch.exceptions import NotFoundError
 from fastapi import HTTPException
@@ -16,11 +15,13 @@ logger = logging.getLogger(__name__)
 class Searcher(ABC):
     @abstractmethod
     async def get_by_id(self):
-        """ Метод взятия объекта по id из базы """
+        """Метод взятия объекта по id из базы"""
+        pass
 
     @abstractmethod
     async def search(self):
-        """ Метод для поиска объектов в базе """
+        """Метод для поиска объектов в базе"""
+        pass
 
 
 class ElasticSearcher(Searcher):

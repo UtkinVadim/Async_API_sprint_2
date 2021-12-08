@@ -1,6 +1,6 @@
 import json
 from abc import ABC, abstractmethod
-from typing import Optional, Union, List
+from typing import List, Optional, Union
 
 import backoff
 from aioredis import Redis
@@ -12,11 +12,13 @@ from core.config import CACHE_EXPIRE_IN_SECONDS
 class Cacher(ABC):
     @abstractmethod
     async def get(self):
-        """ Метод взятия объекта из кэша """
+        """Метод взятия объекта из кэша"""
+        pass
 
     @abstractmethod
     async def put(self):
-        """ Метод пишущий объект (или группу объектов) в кэш """
+        """Метод пишущий объект (или группу объектов) в кэш"""
+        pass
 
     @classmethod
     async def flatten_json(cls, obj) -> List:
@@ -84,7 +86,7 @@ class RedisCacher(Cacher):
         if not data:
             return None
 
-        if 'result' in json.loads(data).keys():
+        if "result" in json.loads(data).keys():
             data = json.loads(data)["result"]
             obj = [model.parse_raw(d) for d in data]
         else:
@@ -93,9 +95,9 @@ class RedisCacher(Cacher):
 
     @backoff.on_exception(backoff.expo, ConnectionRefusedError, max_time=300)
     async def put(
-            self,
-            obj: Union[BaseModel, List[BaseModel]],
-            key: str,
+        self,
+        obj: Union[BaseModel, List[BaseModel]],
+        key: str,
     ) -> None:
         """
         Сохраняем данные, используя команду set
