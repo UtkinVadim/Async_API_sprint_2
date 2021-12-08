@@ -6,10 +6,10 @@ from functional.utils.data_parser import DataParser
 class ExpectedGenre:
     def __init__(self):
         self.parser = DataParser()
-        self.file_data_path = "genres_data.json"
+        self.file_data_name = "genres_data.json"
 
     async def get_expected_genres_data(self, genre_id: str = None) -> Union[list, dict, str]:
-        genres_data_from_file = await self.parser.get_data_from_file(file_name=self.file_data_path)
+        genres_data_from_file = await self.parser.get_data_from_file(file_name=self.file_data_name)
         expected_data = [
             {"uuid": genres.get("id"), "name": genres.get("name")}
             for genres in map(lambda genre_data: genre_data.get("_source"), genres_data_from_file)
@@ -26,14 +26,14 @@ class ExpectedGenre:
 class ExpectedPerson:
     def __init__(self):
         self.parser = DataParser()
-        self.file_data_path = "persons_data.json"
+        self.file_data_name = "persons_data.json"
 
     @staticmethod
     async def get_person_roles(film_ids: list) -> list:
         return [{film["id"]: film["role"]} for film in film_ids]
 
     async def get_expected_persons_data(self, query: str = None, person_id: str = None):
-        persons_data_from_file = await self.parser.get_data_from_file(file_name=self.file_data_path)
+        persons_data_from_file = await self.parser.get_data_from_file(file_name=self.file_data_name)
         expected_data = [
             {
                 "uuid": person.get("id"),
@@ -44,7 +44,9 @@ class ExpectedPerson:
         ]
 
         if query:
-            expected_data = await self.filter_persons_by_query(query, expected_data)
+            expected_data = list(
+                filter(lambda person_info: query.lower() in person_info["full_name"].lower(), expected_data)
+            )
 
         if person_id:
             for person_expected_data in expected_data:
@@ -55,7 +57,7 @@ class ExpectedPerson:
         return expected_data
 
     async def get_expected_person_film_data(self, person_id: str):
-        persons_data_from_file = await self.parser.get_data_from_file(file_name=self.file_data_path)
+        persons_data_from_file = await self.parser.get_data_from_file(file_name=self.file_data_name)
         person_data = list(filter(lambda person: person["_id"] == person_id, persons_data_from_file))[0]
         expected_data = [
             {"uuid": film_info.get("id"), "title": film_info.get("title"), "imdb_rating": film_info.get("imdb_rating")}
@@ -63,27 +65,14 @@ class ExpectedPerson:
         ]
         return expected_data
 
-    @staticmethod
-    async def filter_persons_by_query(query: str, persons):
-        result_list = []
-        for person in persons:
-            for field, field_value in person.items():
-                if field not in ["full_name"]:
-                    continue
-                if query.lower() in str(field_value).lower():
-                    if person not in result_list:
-                        result_list.append(person)
-                    continue
-        return result_list
-
 
 class ExpectedFilm:
     def __init__(self):
         self.parser = DataParser()
-        self.file_data_path = "films_data.json"
+        self.file_data_name = "films_data.json"
 
     async def get_film_detailed_data(self, film_id: str):
-        films_data_from_file = await self.parser.get_data_from_file(file_name=self.file_data_path)
+        films_data_from_file = await self.parser.get_data_from_file(file_name=self.file_data_name)
         film_data = list(filter(lambda film: film["_id"] == film_id, films_data_from_file))[0]["_source"]
         film_data.pop("actors_names")
         film_data.pop("writers_names")
@@ -97,12 +86,14 @@ class ExpectedFilm:
         page_number: int = None,
         sort_by: str = None,
     ):
-        films_data_from_file = await self.parser.get_data_from_file(file_name=self.file_data_path)
+        films_data_from_file = await self.parser.get_data_from_file(file_name=self.file_data_name)
         films_data = [film_data["_source"] for film_data in films_data_from_file]
-
         if query:
-            films_data = await self.filter_films_by_query(query, films_data)
-
+            query = query.lower()
+            films_data = filter(
+                lambda film_data: query in film_data["description"].lower() or query in film_data["title"].lower(),
+                films_data,
+            )
         if genre_id:
             films_data = await self.filter_films_by_genre_id(genre_id, films_data)
 
@@ -119,19 +110,6 @@ class ExpectedFilm:
             films_data = films_data[:page_size]
 
         return films_data
-
-    @staticmethod
-    async def filter_films_by_query(query: str, films_data: List):
-        result_list = []
-        for film in films_data:
-            for field, field_value in film.items():
-                if field not in ["title", "description"]:
-                    continue
-                if query.lower() in str(field_value).lower():
-                    if film not in result_list:
-                        result_list.append(film)
-                    continue
-        return result_list
 
     @staticmethod
     async def filter_films_by_genre_id(genre_id: str, films_data: List):
