@@ -1,23 +1,21 @@
 import logging
 from functools import lru_cache
 
-from aioredis import Redis
-from db.elastic import get_elastic
-from db.redis import get_redis
-from elasticsearch import AsyncElasticsearch
 from fastapi import Depends
+
+from db.elastic import get_elastic
 from models.film import Film
 from models.genre import Genre
 from services.base_service import BaseService
-from services.cacher import RedisCacher
-from services.searcher import ElasticSearcher
+from services.cacher import Cacher, get_redis_extended
+from services.searcher import Searcher
 
 logger = logging.getLogger(__name__)
 
 
 class FilmService(BaseService):
-    def __init__(self, redis: RedisCacher, elastic: ElasticSearcher):
-        super().__init__(redis, elastic)
+    def __init__(self, cacher: Cacher, searcher: Searcher):
+        super().__init__(cacher, searcher)
         self.index = "movies"
         self.model = Film
 
@@ -36,7 +34,7 @@ class FilmService(BaseService):
 
 @lru_cache()
 def get_film_service(
-    redis: Redis = Depends(get_redis),
-    elastic: AsyncElasticsearch = Depends(get_elastic),
+    cache_engine: Cacher = Depends(get_redis_extended),
+    search_engine: Searcher = Depends(get_elastic),
 ) -> FilmService:
-    return FilmService(RedisCacher(redis), ElasticSearcher(elastic))
+    return FilmService(cacher=cache_engine, searcher=search_engine)
