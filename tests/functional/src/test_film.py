@@ -2,7 +2,6 @@ import http
 import json
 
 import pytest
-
 from functional.utils.expected_data_parser import ExpectedFilm
 
 expected_data_parser = ExpectedFilm()
@@ -26,9 +25,7 @@ async def test_film_detailed_not_found(make_get_request):
 @pytest.mark.asyncio
 async def test_film_filter(make_get_request):
     page_size = 5
-    response = await make_get_request(
-        method="/film", params={"page[size]": page_size}
-    )
+    response = await make_get_request(method="/film", params={"page[size]": page_size})
     assert response.status == http.HTTPStatus.OK
     expected = await expected_data_parser.get_film_data(page_size=page_size)
     assert len(response.body) == page_size
@@ -39,9 +36,7 @@ async def test_film_filter(make_get_request):
 async def test_film_filter_sorted_desc(make_get_request):
     page_size = 5
     sort = "-imdb_rating"
-    response = await make_get_request(
-        method="/film", params={"page[size]": page_size, "sort": sort}
-    )
+    response = await make_get_request(method="/film", params={"page[size]": page_size, "sort": sort})
     assert response.status == http.HTTPStatus.OK
     expected = await expected_data_parser.get_film_data(page_size=page_size, sort_by=sort)
     assert len(response.body) == page_size
@@ -53,9 +48,7 @@ async def test_film_filter_sorted_asc(make_get_request):
     genre_id = "ca88141b-a6b4-450d-bbc3-efa940e4953f"
     page_size = 3
     sort = "imdb_rating"
-    response = await make_get_request(
-        method="/film", params={"filter[genre]": genre_id, "page[size]": page_size, "sort": sort}
-    )
+    response = await make_get_request(method="/film", params={"filter[genre]": genre_id, "page[size]": page_size, "sort": sort})
     assert response.status == http.HTTPStatus.OK
     expected = await expected_data_parser.get_film_data(genre_id=genre_id, page_size=page_size, sort_by=sort)
     assert len(response.body) == len(expected)
@@ -64,20 +57,18 @@ async def test_film_filter_sorted_asc(make_get_request):
 
 @pytest.mark.asyncio
 async def test_film_filter_paginator(make_get_request):
+    genre_id = "6c162475-c7ed-4461-9184-001ef3d9f26e"
+    page_size = 3
+    page_number = 2
+    sort = "imdb_rating"
     response = await make_get_request(
-        method="/film",
-        params={"id": "ca88141b-a6b4-450d-bbc3-efa940e4953f", "page[size]": "2", "page[number]": "3", "sort": "imdb_rating"},
+        method="/film", params={"filter[genre]": genre_id, "page[size]": page_size, "page[number]": page_number, "sort": sort}
     )
     assert response.status == http.HTTPStatus.OK
-    expected = [
-        {
-            "id": "46f15353-2add-415d-9782-fa9c5b8083d5",
-            "title": "Star Wars: Episode IX - The Rise of Skywalker",
-            "imdb_rating": 6.7,
-        },
-        {"id": "57beb3fd-b1c9-4f8a-9c06-2da13f95251c", "title": "Solo: A Star Wars Story", "imdb_rating": 6.9},
-    ]
-    assert len(response.body) == 2
+    expected = await expected_data_parser.get_film_data(
+        genre_id=genre_id, page_size=page_size, page_number=page_number, sort_by=sort
+    )
+    assert len(response.body) == len(expected)
     assert response.body == expected
 
 
