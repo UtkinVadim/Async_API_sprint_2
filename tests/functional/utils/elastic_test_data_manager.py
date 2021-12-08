@@ -1,13 +1,11 @@
-import json
-from pathlib import Path
-
 from elasticsearch import AsyncElasticsearch, helpers
+from functional.utils.data_parser import DataParser
 
 
-class ElasticTestDataManager:
+class ElasticTestDataManager(DataParser):
     def __init__(self, elastic_client: AsyncElasticsearch = None):
+        super().__init__()
         self.elastic_client = elastic_client
-        self.test_data_path = Path(__file__).resolve().parent.parent / "testdata"
 
     async def create_elastic_test_data(self):
         """
@@ -20,38 +18,35 @@ class ElasticTestDataManager:
         """
         Метод для создания индексов в elasticsearch.
         """
-        await self._create_index(index="genre", settings_path=f"{self.test_data_path}/genre_index_settings.json")
-        await self._create_index(index="person", settings_path=f"{self.test_data_path}/person_index_settings.json")
-        await self._create_index(index="movies", settings_path=f"{self.test_data_path}/film_index_settings.json")
+        await self._create_index(index="genre", file_name="genre_index_settings.json")
+        await self._create_index(index="person", file_name="person_index_settings.json")
+        await self._create_index(index="movies", file_name="film_index_settings.json")
 
     async def _create_test_data(self):
         """
         Метод для создания записей в elasticsearch.
         """
-        await self._create_test_data_from_file(data_path=f"{self.test_data_path}/films_data.json", index="movies")
-        await self._create_test_data_from_file(data_path=f"{self.test_data_path}/genres_data.json", index="genre")
-        await self._create_test_data_from_file(data_path=f"{self.test_data_path}/persons_data.json", index="person")
+        await self._create_test_data_from_file(file_name="films_data.json", index="movies")
+        await self._create_test_data_from_file(file_name="genres_data.json", index="genre")
+        await self._create_test_data_from_file(file_name="persons_data.json", index="person")
 
-    async def _create_test_data_from_file(self, data_path: str, index: str):
+    async def _create_test_data_from_file(self, file_name: str, index: str):
         """
         Метод для наполнения индекса данными, прочитанными из файла.
         :param index: имя индекса в который будут загружены данные.
-        :param data_path: Путь к json файлу с данными, которые нужно загрузить.
+        :param file_name: Название json файла с данными, которые нужно загрузить.
         """
-        with open(data_path, "r") as films_data:
-            await helpers.async_bulk(client=self.elastic_client, actions=json.load(films_data), index=index, refresh=True)
+        actions = await self.get_data_from_file(file_name)
+        await helpers.async_bulk(client=self.elastic_client, actions=actions, index=index, refresh=True)
 
-    async def _create_index(self, settings_path: str, index: str):
+    async def _create_index(self, file_name: str, index: str):
         """
         Метод для наполнения индекса данными, прочитанными из файла.
         :param index: Имя создаваемого индекса.
-        :param settings_path: Путь к json файлу с настройками создаваемого индекса.
+        :param file_name: Название json файла с настройками создаваемого индекса.
         """
-        with open(settings_path, "r") as index_settings_file:
-            index_settings = json.loads(index_settings_file.read())
-            await self.elastic_client.indices.create(
-                index=index, settings=index_settings["settings"], mappings=index_settings["mappings"], ignore=400
-            )
+        settings, mappings = await self.get_index_data_from_file(file_name)
+        await self.elastic_client.indices.create(index=index, settings=settings, mappings=mappings, ignore=400)
 
     async def delete_elastic_test_data(self):
         """
