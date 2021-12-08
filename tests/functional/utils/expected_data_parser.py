@@ -73,10 +73,29 @@ class ExpectedFilm:
         return film_data
 
     async def get_film_data(
-        self, genre_id: str = None, page_size: int = None, page_number: int = None, sort_by: str = None
+        self,
+        query: str = None,
+        genre_id: str = None,
+        page_size: int = None,
+        page_number: int = None,
+        sort_by: str = None,
     ):
         films_data_from_file = await self.parser.get_data_from_file(file_name=self.file_data_path)
         films_data = [film_data["_source"] for film_data in films_data_from_file]
+
+        if query:
+            result_list = []
+            for film in films_data:
+                for field, field_value in film.items():
+                    if field not in ["title", "description"]:
+                        continue
+                    if query.lower() in str(field_value).lower():
+                        if film not in result_list:
+                            result_list.append(film)
+                        continue
+
+            films_data = result_list
+
         if genre_id:
             genre_parser = ExpectedGenre()
             genre = await genre_parser.get_expected_genres_data(genre_id)
@@ -98,4 +117,5 @@ class ExpectedFilm:
             films_data = films_data[(page_number - 1) * page_size : page_number * page_size]
         elif page_size:
             films_data = films_data[:page_size]
+
         return films_data
