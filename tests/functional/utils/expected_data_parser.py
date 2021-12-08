@@ -32,7 +32,7 @@ class ExpectedPerson:
     async def get_person_roles(film_ids: list) -> list:
         return [{film["id"]: film["role"]} for film in film_ids]
 
-    async def get_expected_persons_data(self, person_id: str = None):
+    async def get_expected_persons_data(self, query: str = None, person_id: str = None):
         persons_data_from_file = await self.parser.get_data_from_file(file_name=self.file_data_path)
         expected_data = [
             {
@@ -42,6 +42,19 @@ class ExpectedPerson:
             }
             for person in map(lambda person_data: person_data.get("_source"), persons_data_from_file)
         ]
+
+        if query:
+            result_list = []
+            for person in expected_data:
+                for field, field_value in person.items():
+                    if field not in ["full_name"]:
+                        continue
+                    if query.lower() in str(field_value).lower():
+                        if person not in result_list:
+                            result_list.append(person)
+                        continue
+            expected_data = result_list
+
         if person_id:
             for person_expected_data in expected_data:
                 if person_id in person_expected_data.values():
