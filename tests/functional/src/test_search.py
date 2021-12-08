@@ -2,132 +2,109 @@ import http
 import json
 
 import pytest
+from functional.utils.expected_data_parser import ExpectedFilm
+
+expected_data_parser = ExpectedFilm()
 
 
 @pytest.mark.asyncio
 async def test_film_search_query(make_get_request):
-    response = await make_get_request(method="/film/search", params={"query": "war"})
+    query = "war"
+    page_size = 20
+    response = await make_get_request(method="/film/search", params={"query": query, "page[size]": page_size})
+    expected = await expected_data_parser.get_film_data(query=query, page_size=page_size)
     assert response.status == http.HTTPStatus.OK
-    expected = [
-        {
-            "id": "516f91da-bd70-4351-ba6d-25e16b7713b7",
-            "title": "Star Wars: Episode III - Revenge of the Sith",
-            "imdb_rating": 7.5,
-        },
-        {"id": "b1f1e8a6-e310-47d9-a93c-6a7b192bac0e", "title": "Star Trek Beyond", "imdb_rating": 7.1},
-        {"id": "6ecc7a32-14a1-4da8-9881-bf81f0f09897", "title": "Star Trek Into Darkness", "imdb_rating": 7.7},
-        {"id": "57beb3fd-b1c9-4f8a-9c06-2da13f95251c", "title": "Solo: A Star Wars Story", "imdb_rating": 6.9},
-        {"id": "118fd71b-93cd-4de5-95a4-e1485edad30e", "title": "Rogue One: A Star Wars Story", "imdb_rating": 7.8},
-        {"id": "3d825f60-9fff-4dfe-b294-1a45fa1e115d", "title": "Star Wars: Episode IV - A New Hope", "imdb_rating": 8.6},
-        {"id": "025c58cd-1b7e-43be-9ffb-8571a613579b", "title": "Star Wars: Episode VI - Return of the Jedi", "imdb_rating": 8.3},
-        {"id": "cddf9b8f-27f9-4fe9-97cb-9e27d4fe3394", "title": "Star Wars: Episode VII - The Force Awakens", "imdb_rating": 7.9},
-        {"id": "3b914679-1f5e-4cbd-8044-d13d35d5236c", "title": "Star Wars: Episode I - The Phantom Menace", "imdb_rating": 6.5},
-        {
-            "id": "c4c5e3de-c0c9-4091-b242-ceb331004dfd",
-            "title": "Star Wars: Episode II - Attack of the Clones",
-            "imdb_rating": 6.5,
-        },
-    ]
-    assert len(response.body) == 10
-    assert response.body == expected
+    assert len(response.body) == len(expected)
+    assert sorted(response.body, key=lambda x: x["id"]) == sorted(expected, key=lambda x: x["id"])
 
 
 @pytest.mark.asyncio
 async def test_film_search_filter(make_get_request):
+    query = "trek"
+    filter_genre_id = "ca88141b-a6b4-450d-bbc3-efa940e4953f"
+    page_size = 20
     response = await make_get_request(
         method="/film/search",
         params={
-            "query": "trek",
-            "filter_genre_id": "ca88141b-a6b4-450d-bbc3-efa940e4953f",
-            "page[size]": "20",
+            "query": query,
+            "filter[genre]": filter_genre_id,
+            "page[size]": page_size,
         },
     )
+    expected = await expected_data_parser.get_film_data(query=query, page_size=page_size, genre_id=filter_genre_id)
     assert response.status == http.HTTPStatus.OK
-    expected = [
-        {"id": "b1384a92-f7fe-476b-b90b-6cec2b7a0dce", "title": "Star Trek: The Next Generation", "imdb_rating": 8.6},
-        {"id": "4af6c9c9-0be0-4864-b1e9-7f87dd59ee1f", "title": "Star Trek", "imdb_rating": 7.9},
-        {"id": "a7b11817-205f-4e1a-98b5-e3c48b824bc3", "title": "Star Trek", "imdb_rating": 6.4},
-        {"id": "6ecc7a32-14a1-4da8-9881-bf81f0f09897", "title": "Star Trek Into Darkness", "imdb_rating": 7.7},
-        {"id": "b1f1e8a6-e310-47d9-a93c-6a7b192bac0e", "title": "Star Trek Beyond", "imdb_rating": 7.1},
-        {"id": "c9e1f6f0-4f1e-4a76-92ee-76c1942faa97", "title": "Star Trek: Discovery", "imdb_rating": 7.3},
-        {"id": "50fb4de9-e4b3-4aca-9f2f-00a48f12f9b3", "title": "Star Trek: First Contact", "imdb_rating": 7.6},
-        {"id": "6e5cd268-8ce4-45f9-87d2-52f0f26edc9e", "title": "Star Trek II: The Wrath of Khan", "imdb_rating": 7.7},
-    ]
-    assert len(response.body) == 8
+    assert len(response.body) == len(expected)
     assert response.body == expected
 
 
 @pytest.mark.asyncio
 async def test_film_search_sorted_desc(make_get_request):
+    query = "trek"
+    filter_genre_id = "ca88141b-a6b4-450d-bbc3-efa940e4953f"
+    page_size = 20
+    sort = "-imdb_rating"
     response = await make_get_request(
         method="/film/search",
         params={
-            "query": "trek",
-            "filter_genre_id": "ca88141b-a6b4-450d-bbc3-efa940e4953f",
-            "page[size]": "20",
-            "sort": "-imdb_rating",
+            "query": query,
+            "filter[genre]": filter_genre_id,
+            "page[size]": page_size,
+            "sort": sort,
         },
     )
+    expected = await expected_data_parser.get_film_data(
+        query=query, page_size=page_size, genre_id=filter_genre_id, sort_by=sort
+    )
     assert response.status == http.HTTPStatus.OK
-    expected = [
-        {"id": "b1384a92-f7fe-476b-b90b-6cec2b7a0dce", "title": "Star Trek: The Next Generation", "imdb_rating": 8.6},
-        {"id": "4af6c9c9-0be0-4864-b1e9-7f87dd59ee1f", "title": "Star Trek", "imdb_rating": 7.9},
-        {"id": "6ecc7a32-14a1-4da8-9881-bf81f0f09897", "title": "Star Trek Into Darkness", "imdb_rating": 7.7},
-        {"id": "6e5cd268-8ce4-45f9-87d2-52f0f26edc9e", "title": "Star Trek II: The Wrath of Khan", "imdb_rating": 7.7},
-        {"id": "50fb4de9-e4b3-4aca-9f2f-00a48f12f9b3", "title": "Star Trek: First Contact", "imdb_rating": 7.6},
-        {"id": "c9e1f6f0-4f1e-4a76-92ee-76c1942faa97", "title": "Star Trek: Discovery", "imdb_rating": 7.3},
-        {"id": "b1f1e8a6-e310-47d9-a93c-6a7b192bac0e", "title": "Star Trek Beyond", "imdb_rating": 7.1},
-        {"id": "a7b11817-205f-4e1a-98b5-e3c48b824bc3", "title": "Star Trek", "imdb_rating": 6.4},
-    ]
-    assert len(response.body) == 8
+    assert len(response.body) == len(expected)
     assert response.body == expected
 
 
 @pytest.mark.asyncio
 async def test_film_search_sorted_asc(make_get_request):
+    query = "trek"
+    filter_genre_id = "ca88141b-a6b4-450d-bbc3-efa940e4953f"
+    page_size = 20
+    sort = "imdb_rating"
     response = await make_get_request(
         method="/film/search",
         params={
-            "query": "trek",
-            "filter_genre_id": "ca88141b-a6b4-450d-bbc3-efa940e4953f",
-            "page[size]": "20",
-            "sort": "imdb_rating",
+            "query": query,
+            "filter[genre]": filter_genre_id,
+            "page[size]": page_size,
+            "sort": sort,
         },
     )
+    expected = await expected_data_parser.get_film_data(
+        query=query, page_size=page_size, genre_id=filter_genre_id, sort_by=sort
+    )
     assert response.status == http.HTTPStatus.OK
-
-    expected = [
-        {"id": "a7b11817-205f-4e1a-98b5-e3c48b824bc3", "title": "Star Trek", "imdb_rating": 6.4},
-        {"id": "b1f1e8a6-e310-47d9-a93c-6a7b192bac0e", "title": "Star Trek Beyond", "imdb_rating": 7.1},
-        {"id": "c9e1f6f0-4f1e-4a76-92ee-76c1942faa97", "title": "Star Trek: Discovery", "imdb_rating": 7.3},
-        {"id": "50fb4de9-e4b3-4aca-9f2f-00a48f12f9b3", "title": "Star Trek: First Contact", "imdb_rating": 7.6},
-        {"id": "6ecc7a32-14a1-4da8-9881-bf81f0f09897", "title": "Star Trek Into Darkness", "imdb_rating": 7.7},
-        {"id": "6e5cd268-8ce4-45f9-87d2-52f0f26edc9e", "title": "Star Trek II: The Wrath of Khan", "imdb_rating": 7.7},
-        {"id": "4af6c9c9-0be0-4864-b1e9-7f87dd59ee1f", "title": "Star Trek", "imdb_rating": 7.9},
-        {"id": "b1384a92-f7fe-476b-b90b-6cec2b7a0dce", "title": "Star Trek: The Next Generation", "imdb_rating": 8.6},
-    ]
-    assert len(response.body) == 8
+    assert len(response.body) == len(expected)
     assert response.body == expected
 
 
 @pytest.mark.asyncio
 async def test_film_search_paginator(make_get_request):
+    query = "trek"
+    filter_genre_id = "ca88141b-a6b4-450d-bbc3-efa940e4953f"
+    page_size = 1
+    page_number = 2
+    sort = "imdb_rating"
     response = await make_get_request(
         method="/film/search",
         params={
-            "query": "trek",
-            "filter_genre_id": "ca88141b-a6b4-450d-bbc3-efa940e4953f",
-            "page[size]": "2",
-            "page[number]": "3",
-            "sort": "imdb_rating",
+            "query": query,
+            "filter[genre]": filter_genre_id,
+            "page[size]": page_size,
+            "page[number]": page_number,
+            "sort": sort,
         },
     )
+    expected = await expected_data_parser.get_film_data(
+        query=query, page_size=page_size, page_number=page_number, genre_id=filter_genre_id, sort_by=sort
+    )
     assert response.status == http.HTTPStatus.OK
-    expected = [
-        {"id": "50fb4de9-e4b3-4aca-9f2f-00a48f12f9b3", "title": "Star Trek: First Contact", "imdb_rating": 7.6},
-        {"id": "6ecc7a32-14a1-4da8-9881-bf81f0f09897", "title": "Star Trek Into Darkness", "imdb_rating": 7.7},
-    ]
-    assert len(response.body) == 2
+    assert len(response.body) == len(expected)
     assert response.body == expected
 
 
