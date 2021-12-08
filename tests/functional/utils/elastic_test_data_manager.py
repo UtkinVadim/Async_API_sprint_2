@@ -1,7 +1,4 @@
-import json
-
 from elasticsearch import AsyncElasticsearch, helpers
-
 from functional.utils.data_parser import DataParser
 
 
