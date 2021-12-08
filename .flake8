@@ -10,6 +10,6 @@ exclude =
     venv
     env
 
-max-cognitive-complexity = 9
+max-cognitive-complexity = 10
 
 doctests = True
